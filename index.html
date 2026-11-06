@@ -4,6 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FORMDOT. · 3D 모델링 · 프린팅</title>
+<meta name="description" content="3D 모델링부터 프린팅까지, 당신의 아이디어를 현실로 구현합니다. 파일만 올리면 바로 견적!">
+<meta name="theme-color" content="#202124">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://k1585.github.io/">
+<meta property="og:site_name" content="FORMDOT.">
+<meta property="og:title" content="FORMDOT. · 아이디어를 형태로.">
+<meta property="og:description" content="3D 모델링부터 프린팅까지, 당신의 아이디어를 현실로 구현합니다. 파일만 올리면 바로 견적!">
+<meta property="og:image" content="https://k1585.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FORMDOT.">
 <style>
 :root{
   --bg:#f4f5f7; --card:#fff; --text:#1d2129; --muted:#6b7280; --line:#e3e6ea;
@@ -386,6 +404,98 @@ body.edit-mode [data-tk],body.edit-mode #quoteView [data-t],body.edit-mode #orde
 body.edit-mode .tx-hold{outline:2px solid #8aaaff!important;background:rgba(41,98,255,.25)}
 .tx-flash{animation:txflash 1.2s}
 @keyframes txflash{0%{background:rgba(41,98,255,.6)}100%{background:transparent}}
+
+/* ================= 토스 느낌 모션 ================= */
+:root{--ease:cubic-bezier(.2,.8,.2,1)}
+.screen-in{animation:screenIn .42s var(--ease) both}
+.screen-in .wz-card,.screen-in .sec,.screen-in .pf,.screen-in .faq .acc{animation:itemIn .5s var(--ease) both}
+.screen-in .wz-card:nth-child(2),.screen-in .sec:nth-child(2),.screen-in .pf:nth-child(2){animation-delay:.05s}
+.screen-in .wz-card:nth-child(3),.screen-in .sec:nth-child(3),.screen-in .pf:nth-child(3){animation-delay:.1s}
+.screen-in .pf:nth-child(4){animation-delay:.15s}.screen-in .pf:nth-child(5){animation-delay:.2s}.screen-in .pf:nth-child(6){animation-delay:.25s}
+@keyframes screenIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes itemIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+button,.btn-store,.wz-card,.acc-head,.tb-chip{transition:transform .14s var(--ease),background-color .25s,border-color .25s,color .25s,opacity .25s,filter .2s}
+button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.97)}
+.wz-card.sel{transform:scale(1.01)}
+.acc-body:not([hidden]),.help-text:not([hidden]),.consent-body:not([hidden]),.stu-body:not([hidden]){animation:accIn .32s var(--ease)}
+@keyframes accIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.acc{transition:border-color .25s,background-color .25s}
+.acc:has(.acc-head[aria-expanded="true"]){border-color:rgba(41,98,255,.5)}
+/* 미끄러지는 선택 표시 */
+.seg{position:relative;isolation:isolate}
+.seg-pill{position:absolute;top:0;bottom:0;left:0;width:0;background:var(--accent);z-index:-1;
+  transition:left .32s var(--ease),width .32s var(--ease),opacity .2s;pointer-events:none}
+.seg.has-pill button{background:transparent!important}
+.seg.has-pill button+button{border-left-color:transparent}
+/* 창: 휴대폰에서는 아래에서 올라오는 시트 */
+.modal:not([hidden]){animation:fadeIn .22s ease both}
+.modal:not([hidden]) .modal-box{animation:popIn .34s var(--ease) both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+@media (max-width:560px){
+  .modal{align-items:flex-end;padding:0}
+  .modal-box{max-width:none!important;border-radius:22px 22px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom))}
+  .modal:not([hidden]) .modal-box{animation:sheetIn .38s var(--ease) both}
+  .pin-box{max-width:none}
+}
+@keyframes sheetIn{from{transform:translateY(100%)}to{transform:none}}
+.toast{animation:toastIn .35s var(--ease) both}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}
+#orderView:not([hidden]) .order-no .num{animation:numPop .6s var(--ease) both}
+@keyframes numPop{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.08)}100%{opacity:1;transform:none}}
+#orderView:not([hidden]) .card{animation:itemIn .5s var(--ease) both}
+.price .total{font-variant-numeric:tabular-nums}
+#fileInfo,#stats{animation:accIn .3s var(--ease)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;
+  animation:spin .8s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+}
+
+/* ================= 새 요소 ================= */
+.consent{margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--field)}
+.consent.bad{border-color:#ff6b6b}
+.chk-row{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;cursor:pointer}
+.chk-row input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--accent);flex:none}
+.consent-more{margin-left:28px;padding:4px 0}
+.consent-body{margin:6px 0 0 30px;font-size:13px;color:var(--muted);line-height:1.6;word-break:keep-all}
+.consent .fld-err{color:#ff8a8a;font-size:13px;margin:6px 0 0 30px}
+.view-hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+.faq .acc-t{flex:1;white-space:normal;font-weight:600}
+.faq .acc-body{font-size:14px;color:#d9dce1;line-height:1.65;word-break:keep-all}
+.faq{text-align:left;margin-bottom:24px}
+.sfx-btn{font-size:16px;text-decoration:none;padding:4px 8px}
+/* 관리자 */
+.admin-sum{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));margin-bottom:12px}
+.admin-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.admin-tools input,.admin-tools select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--text);font-size:14px}
+.admin-tools input{flex:1;min-width:200px}
+.status-sel{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--text);font-size:14px}
+.st-checked{background:rgba(138,170,255,.18);color:#a9c0ff}
+.st-making{background:rgba(52,211,153,.16);color:#6ee7b7}
+.st-done{background:var(--line);color:var(--muted)}
+.st-new{background:var(--warn-soft);color:var(--warn)}
+.set-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
+.set-row:first-of-type{border-top:none}
+.set-in{display:flex;align-items:center;gap:6px}
+.set-in input{width:120px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--text);font-size:14px;text-align:right}
+.set-in em{font-style:normal;color:var(--muted);font-size:13px;width:20px}
+
+/* ---- 휴대폰 화면 다듬기 ---- */
+.stats{display:flex;flex-wrap:wrap;gap:4px 18px}
+.stats span{white-space:nowrap}
+#drop small{display:block;word-break:keep-all}
+@media (max-width:560px){
+  .pf-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .pf b{font-size:13.5px}
+  .pf small{font-size:11.5px}
+  .pf > div{padding:8px 10px}
+  .home{padding-top:28px}
+  .brand{font-size:44px}
+  .topbar{gap:6px}
+  .tb-right{width:100%;justify-content:flex-end}
+}
 </style>
 </head>
 <body>
@@ -402,6 +512,7 @@ body.edit-mode .tx-hold{outline:2px solid #8aaaff!important;background:rgba(41,9
      <button class="tb-chip stu" id="tbStu" hidden></button>
      <div class="tb-right">
        <div class="seg sm" id="tbLevel"><button data-v="beg" data-t="top.beg">🙂 초보자</button><button data-v="pro" data-t="top.pro">⚡ 숙련자</button></div>
+       <button class="link-btn sfx-btn" id="tbSfx" aria-label="효과음 끄기">🔊</button>
        <button class="link-btn" id="tbRestart" data-t="top.restart">처음으로</button>
      </div>
    </div>
@@ -417,6 +528,7 @@ body.edit-mode .tx-hold{outline:2px solid #8aaaff!important;background:rgba(41,9
        </div>
        <div id="fileInfo"></div>
        <canvas id="view" style="display:none"></canvas>
+       <div class="view-hint" id="viewHint" hidden data-t="file.viewHint">드래그로 돌려 보기 · 두 손가락으로 확대 · 두 번 탭하면 처음 시점</div>
        <div id="stats" class="stats"></div>
      </section>
 
@@ -455,6 +567,7 @@ body.edit-mode .tx-hold{outline:2px solid #8aaaff!important;background:rgba(41,9
          </div>
          <div class="formula" id="summary"></div>
        </div>
+       <div id="fileConsentSlot"></div>
        <button id="orderBtn" class="btn-primary btn-wide is-disabled" aria-disabled="true" data-t="price.order">주문 신청하기</button>
        <div class="btn-sub">
          <a class="btn-store sm storeLink" href="#" target="_blank" rel="noopener" draggable="false" data-t="price.store">스마트스토어 바로가기</a>
@@ -552,8 +665,15 @@ body.edit-mode .tx-hold{outline:2px solid #8aaaff!important;background:rgba(41,9
     <button data-tab="orders" class="on">📋 주문 관리</button>
     <button data-tab="portfolio">🖼 포트폴리오</button>
     <button data-tab="texts">✏️ 사이트 문구</button>
+    <button data-tab="settings">💰 가격 설정</button>
   </div>
   <div id="tab-orders">
+    <div class="tiles admin-sum" id="adminSum"></div>
+    <div class="admin-tools">
+      <input type="search" id="ordSearch" placeholder="번호·이름·연락처·파일명 검색">
+      <select id="ordType" aria-label="종류"><option value="all">모든 종류</option><option value="file">📦 3D 파일</option><option value="sketch">✏️ 스케치</option><option value="idea">💡 아이디어</option></select>
+    </div>
+    <div class="seg sm" id="ordFilter" style="margin-bottom:10px"><button data-v="all" class="on">전체</button><button data-v="open">처리 대기</button><button data-v="making">제작 중</button><button data-v="done">완료</button><button data-v="test">테스트</button></div>
     <p class="sub" id="adminSub">불러오는 중…</p>
     <div id="adminList"></div>
   </div>
@@ -568,6 +688,11 @@ body.edit-mode .tx-hold{outline:2px solid #8aaaff!important;background:rgba(41,9
       <div class="btn-row"><button id="pfAdd" class="btn-primary">추가하기</button></div>
       <div class="note" id="pfMsg"></div>
     </div>
+  </div>
+  <div id="tab-settings" hidden>
+    <p class="sub">가격 기준을 바꾸면 손님 화면과 견적 계산기에 바로 적용돼요. 안내 문구 속 할인율·추가 금액도 자동으로 바뀌어요.</p>
+    <div id="setForm"></div>
+    <div class="sticky-save"><button id="setSave" class="btn-primary">저장하기</button><button id="setReset">기본값으로</button><span class="note" id="setMsg" style="margin:0"></span></div>
   </div>
   <div id="tab-texts" hidden>
     <p class="sub">손님에게 보이는 모든 문구를 바꿀 수 있어요. 바꾼 칸은 초록색으로 표시돼요. <b>{no}</b>, <b>{price}</b> 같은 중괄호 부분은 자동으로 채워지는 값이니 지우지 마세요.</p>
@@ -625,10 +750,10 @@ const ADMIN_PW_SUFFIX = "-3dprint";
 
 /* ======== 디자인비 · 학생 할인 ======== */
 const DESIGN_FEE = {file: 0, sketch: 3000, idea: 6000};   // 성인 기본 디자인비 (기본 1시간 포함)
-const DESIGN_BASE_MIN = 60;     // 기본 포함 시간 (분)
-const DESIGN_STEP_MIN = 30;     // 초과하면 이 시간(분)마다
-const DESIGN_STEP_FEE = 1000;   // 이 금액씩 추가 (원)
-const STUDENT_RATE = 0.15;      // 학생 할인 15%
+let DESIGN_BASE_MIN = 60;     // 기본 포함 시간 (분)
+let DESIGN_STEP_MIN = 30;     // 초과하면 이 시간(분)마다
+let DESIGN_STEP_FEE = 1000;   // 이 금액씩 추가 (원)
+let STUDENT_RATE = 0.15;      // 학생 할인 15%
 const STUDENT_MIN_SEC = 5;      // 학생 인증 영상 최소 길이 (초)
 /* ======== 주문 알림 (ntfy) ========
    폰에 ntfy 앱을 설치하고 아래 채널 이름을 구독하면, 주문이 들어올 때 알림이 와요.
@@ -654,8 +779,8 @@ const TDEF = {
  "way.pro.t": "숙련자 모드", "way.pro.d": "설명은 줄이고 직관적이고 빠르게 진행해요",
  "way.pro.ex": "슬라이서 설정(레이어 높이, 인필 등)을 아는 분께 추천해요",
  "way.next": "다음", "way.needLevel": "먼저 초보자 / 숙련자 모드를 골라 주세요.",
- "stu.title": "🎓 학생 할인 15%",
- "stu.desc": "학생이면 모든 금액(디자인비·출력비)에서 15% 할인돼요.",
+ "stu.title": "🎓 학생 할인 {rate}%",
+ "stu.desc": "학생이면 모든 금액(디자인비·출력비)에서 {rate}% 할인돼요.",
  "stu.how": "<b>학생증</b>과 <b>‘FORMDOT’이라고 적은 종이</b>가 함께 보이게 <b>5초 이상</b> 영상으로 찍어 올려 주세요. 판매자가 영상을 확인한 뒤 최종 적용돼요.",
  "stu.upload": "🎥 인증 영상 올리기 · 촬영하기",
  "stu.reupload": "🎥 다른 영상으로 바꾸기",
@@ -668,7 +793,7 @@ const TDEF = {
  "stu.checking": "영상 확인 중…",
  "stu.making": "🛠 테스트 영상을 만드는 중이에요… (약 6초)",
  "stu.chipOk": "🎓 학생가 적용", "stu.chipNeed": "🎓 학생 인증 필요",
- "stu.rowLabel": "학생 할인", "stu.rowValue": "15% 적용 (인증 영상 첨부)",
+ "stu.rowLabel": "학생 할인", "stu.rowValue": "{rate}% 적용 (인증 영상 첨부)",
  "pick.title": "어떤 의뢰인가요?",
  "pick.sub": "가지고 있는 것에 맞춰 골라 주세요. (최대 출력 크기 300 × 300 × 300 mm)",
  "pick.file.t": "3D 파일 있음", "pick.file.d": "바로 출력 가능 · 추가 비용 없음",
@@ -680,7 +805,7 @@ const TDEF = {
  "pick.free": "디자인비 없음 · 출력비만",
  "pick.fee": "디자인비 {price}~",
  "pick.stuTag": "학생가",
- "pick.feeRule": "디자인비는 기본 1시간 포함, 1시간을 넘으면 30분마다 1,000원이 추가돼요. 출력비는 3D 파일과 같은 방식으로 계산해요.",
+ "pick.feeRule": "디자인비는 기본 {baseTime} 포함, 넘으면 {stepMin}분마다 {stepFee}원이 추가돼요. 출력비는 3D 파일과 같은 방식으로 계산해요.",
  "pick.styleLbl": "진행 모드",
  "pick.quick": "🚀 빠른 모드", "pick.detail": "🛠 상세 모드",
  "pick.quick.file": "재료·색상·튼튼함만 고르면 끝", "pick.quick.req": "꼭 필요한 항목만 적으면 끝",
@@ -693,10 +818,10 @@ const TDEF = {
  "price.empty": "파일을 올리면 견적이 표시돼요.",
  "price.tooBig": "최대 크기를 넘어 견적을 낼 수 없어요.",
  "price.qtyNote": "수량 {n}개 기준",
- "price.stuNote": "🎓 학생 할인 15% 적용",
+ "price.stuNote": "🎓 학생 할인 {rate}% 적용",
  "req.priceTitle": "예상 금액",
  "req.feeFrom": "디자인비 {price}~",
- "req.feeRule": "기본 1시간 포함 · 초과 30분마다 1,000원",
+ "req.feeRule": "기본 {baseTime} 포함 · 초과 {stepMin}분마다 {stepFee}원",
  "req.printLine": "+ 출력비 (설계 후 3D 파일과 같은 방식으로 계산)",
  "req.submit": "견적 요청하기",
  "req.store": "스마트스토어 바로가기",
@@ -739,16 +864,41 @@ const TDEF = {
  "msg.loading": "불러오는 중…",
  "opt.default": "기본값",
  "opt.resetAll": "모든 옵션 기본값으로",
- "mode.change": "▾"
+ "mode.change": "▾",
+ "consent.label": "<b>[필수]</b> 개인정보 수집·이용에 동의합니다",
+ "consent.more": "내용 보기",
+ "consent.body": "<b>수집 항목</b> 연락처, 이름(선택), 첨부한 사진·파일, 학생 인증 영상(학생 할인을 쓸 때)<br><b>이용 목적</b> 견적 안내, 주문 제작·처리, 학생 할인 확인<br><b>보유 기간</b> 주문 처리 완료 후 1년 (학생 인증 영상은 확인 후 삭제)<br>동의하지 않을 수 있으며, 이 경우 견적 요청과 학생 할인을 이용할 수 없어요.",
+ "consent.need": "개인정보 수집·이용에 동의해 주세요.",
+ "consent.row": "개인정보 수집·이용", "consent.rowVal": "동의함",
+ "faq.title": "자주 묻는 질문",
+ "faq.q1": "주문하면 언제 받을 수 있나요?",
+ "faq.a1": "3D 파일 주문은 보통 결제 확인 후 2~5일 안에 출력해서 보내 드려요. 스케치·아이디어 의뢰는 설계 기간이 더해지며, 견적을 안내할 때 예상 일정을 함께 알려 드려요. 크기와 수량에 따라 달라질 수 있어요.",
+ "faq.q2": "결제는 어떻게 하나요?",
+ "faq.a2": "사이트에서 주문·견적 요청을 하면 4자리 번호가 나와요. 스마트스토어에서 주문할 때 <b>옵션에 그 번호</b>를 적어 주시면 확인 후 제작을 시작해요.",
+ "faq.q3": "얼마나 큰 것까지 만들 수 있나요?",
+ "faq.a3": "한 번에 가로·세로·높이 각각 최대 300mm까지 출력할 수 있어요. 더 큰 물건은 나눠서 출력한 뒤 조립하는 방법을 안내해 드려요.",
+ "faq.q4": "어떤 재료를 골라야 할지 모르겠어요.",
+ "faq.a4": "소품·장식품은 <b>PLA Basic</b>, 물이 닿거나 튼튼해야 하면 <b>PETG HF</b>, 햇빛을 받는 실외용은 <b>ASA</b>를 추천해요. 잘 모르겠으면 요청할 때 <b>추천해 주세요</b>를 고르세요.",
+ "faq.q5": "표시된 금액이 최종 금액인가요?",
+ "faq.a5": "3D 파일 모드의 금액은 자동으로 계산한 예상 견적이에요. 실제 출력 조건을 확인한 뒤 조금 달라질 수 있으며, 달라지면 결제 전에 먼저 알려 드려요.",
+ "faq.q6": "주문 후 수정하거나 취소할 수 있나요?",
+ "faq.a6": "제작을 시작하기 전에는 수정·취소할 수 있어요. 맞춤 제작 상품이라 제작이 시작된 뒤에는 단순 변심 취소가 어려우며, 출력 불량은 다시 제작해 드려요.",
+ "file.viewHint": "드래그로 돌려 보기 · 두 손가락으로 확대 · 두 번 탭하면 처음 시점",
+ "msg.bigFile": "큰 파일이라 분석에 시간이 조금 걸려요…",
+ "msg.hugeFile": "파일이 너무 커요 (최대 {mb}MB). 모델을 줄이거나 나눠서 올려 주세요.",
+ "top.sfxOn": "🔊", "top.sfxOff": "🔇"
 };
 let TOV = {};                                   // 관리자가 바꾼 문구
 let EDIT = false;                               // 화면에서 직접 편집하는 중인지 (관리자만)
 // 편집 모드에서는 글자를 꾹 누를 수 있게 표시를 붙여 줌
 const wrapT = (key, s) => EDIT ? `<span class="tx-e" data-tk="${key}">${s}</span>` : s;
+// 가격 설정값으로 자동 채워지는 값: {rate} 학생 할인율, {baseTime} 기본 포함 시간, {stepMin} 추가 단위(분), {stepFee} 추가 금액
+const GV = () => ({rate: Math.round(STUDENT_RATE * 100), stepMin: DESIGN_STEP_MIN, stepFee: DESIGN_STEP_FEE.toLocaleString("ko-KR"),
+  baseTime: DESIGN_BASE_MIN % 60 ? DESIGN_BASE_MIN + "분" : DESIGN_BASE_MIN / 60 + "시간"});
+const tSrc = key => key in TOV ? TOV[key] : key in TDEF ? TDEF[key] : key;   // 채우기 전 원래 문구
 function tRaw(key, vars){
-  let s = key in TOV ? TOV[key] : key in TDEF ? TDEF[key] : key;
-  if (vars) s = String(s).replace(/\{(\w+)\}/g, (m, k) => k in vars ? vars[k] : m);
-  return s;
+  const all = {...GV(), ...(vars || {})};
+  return String(tSrc(key)).replace(/\{(\w+)\}/g, (m, k) => k in all ? all[k] : m);
 }
 const t = (key, vars) => wrapT(key, tRaw(key, vars));
 const plain = s => String(s).replace(/<[^>]+>/g, "");
@@ -1116,6 +1266,7 @@ function renderReqMode(mode){
       <div class="price" style="margin-top:0">
         <div class="total req-total" id="${P("fee")}"></div>
         <div class="formula">${t("req.feeRule")}<br>${t("req.printLine")}</div></div>
+      ${consentHtml(P("consent"))}
       <button class="btn-primary btn-wide" id="${P("submit")}">${t("req.submit")}</button>
       <div class="btn-sub"><a class="btn-store sm storeLink" href="#" target="_blank" rel="noopener" draggable="false">${t("req.store")}</a></div>
       <p class="note beg-only">${t("req.note")}</p>
@@ -1154,6 +1305,7 @@ function addReqFiles(mode, list){
   }
   setFieldErr(fld, msg);
   renderReqFiles(mode);
+  sfx(msg ? "error" : "pop");
 }
 function renderReqFiles(mode){
   $(`${mode}_files_list`).innerHTML = reqFiles[mode].map((it, i) => `<div class="att">
@@ -1187,7 +1339,8 @@ function startRequest(mode){
     setFieldErr(fld, msg);
     if (msg && !firstBad) firstBad = fld;
   }
-  if (firstBad){ firstBad.scrollIntoView({behavior:"smooth", block:"center"}); return; }
+  if (firstBad){ firstBad.scrollIntoView({behavior:"smooth", block:"center"}); sfx("error"); return; }
+  if (!checkConsent(`${mode}_consent`)) return;
 
   const pick = ids => ids.map(id => M.fields.find(f => f.id === id)).filter(f => f && shown(f)).map(f => [plain(f.label), reqVal(mode, f)]).filter(([, v]) => v);
   const test = reqTest[mode];
@@ -1196,14 +1349,14 @@ function startRequest(mode){
     type: M.type, typeLabel: noEmoji(t("mode." + mode)),
     name: (test ? "[테스트] " : "") + reqVal(mode, M.fields.find(f => f.id === "title")),
     total: t("req.total", {fee: won(stuOn() ? stuPrice(fee) : fee)}) + (stuOn() ? ` (${plain(t("pick.stuTag"))})` : ""),
-    test, student: stuOn(), designFee: fee,
+    test, student: stuOn(), designFee: fee, consent: true,
     contact: reqVal(mode, M.fields.find(f => f.id === "contact")),
     sections: [
       [plain(t("req.secInfo")), [[plain(t("req.typeRow")), noEmoji(t("mode." + mode))], [plain(t("req.styleRow")), styleText()],
         ...pick(["title","desc","category","place","mount","dims","use","strength","files"]),
         ...(stuOn() ? [[plain(t("stu.rowLabel")), plain(t("stu.rowValue"))]] : [])]],
       [plain(t("req.secWant")), pick(["mat","color","qty","due"])],
-      [plain(t("req.secWho")), pick(["cname","contact"])]
+      [plain(t("req.secWho")), [...pick(["cname","contact"]), [plain(t("consent.row")), plain(t("consent.rowVal"))]]]
     ]
   };
   openConfirm(d, [...reqFiles[mode].map(it => ({file: it.file, kind: "attach"})), ...studentFiles()]);
@@ -1292,6 +1445,105 @@ async function makeTestVideo(){
   return new File(chunks, name, {type: "video/webm"});
 }
 
+/* ---- 개인정보 수집·이용 동의 ---- */
+const consentHtml = id => `<div class="consent" id="${id}">
+  <label class="chk-row"><input type="checkbox" class="consent-cb"><span>${t("consent.label")}</span></label>
+  <button type="button" class="link-btn consent-more" aria-expanded="false">${t("consent.more")}</button>
+  <div class="consent-body" hidden>${t("consent.body")}</div>
+  <div class="fld-err" hidden></div></div>`;
+document.addEventListener("click", e => {
+  const b = e.target.closest(".consent-more"); if (!b) return;
+  const body = b.nextElementSibling; body.hidden = !body.hidden; b.setAttribute("aria-expanded", !body.hidden);
+});
+document.addEventListener("change", e => {
+  if (!e.target.classList.contains("consent-cb")) return;
+  const box = e.target.closest(".consent"); box.classList.remove("bad"); box.querySelector(".fld-err").hidden = true;
+});
+function checkConsent(id){
+  const box = $(id);
+  if (!box || box.hidden || box.offsetParent === null) return true;
+  const ok = box.querySelector(".consent-cb").checked, err = box.querySelector(".fld-err");
+  err.textContent = ok ? "" : plain(t("consent.need")); err.hidden = ok; box.classList.toggle("bad", !ok);
+  if (!ok){ box.scrollIntoView({behavior: "smooth", block: "center"}); sfx("error"); }
+  return ok;
+}
+
+/* ---- 효과음 (소리 파일 없이 브라우저에서 직접 만든 짧은 소리) ---- */
+let sfxOn = (() => { try{ return localStorage.getItem("formdot_sfx") !== "off"; }catch(e){ return true; } })();
+let actx = null;
+function sfx(kind){
+  if (!sfxOn || EDIT) return;
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === "suspended") actx.resume();
+    const now = actx.currentTime;
+    const tone = (f, at, dur, vol, type = "sine", f2) => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = type; o.frequency.setValueAtTime(f, now + at);
+      if (f2) o.frequency.exponentialRampToValueAtTime(f2, now + at + dur);
+      g.gain.setValueAtTime(0.0001, now + at);
+      g.gain.exponentialRampToValueAtTime(vol, now + at + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + at + dur);
+      o.connect(g).connect(actx.destination); o.start(now + at); o.stop(now + at + dur + 0.03);
+    };
+    if (kind === "select") tone(880, 0, 0.07, 0.03, "sine", 1180);
+    else if (kind === "open") tone(620, 0, 0.08, 0.025, "sine", 900);
+    else if (kind === "pop") tone(520, 0, 0.1, 0.045, "sine", 980);
+    else if (kind === "success"){ tone(784, 0, 0.14, 0.05); tone(1047, 0.09, 0.16, 0.05); tone(1319, 0.18, 0.3, 0.045); }
+    else if (kind === "error"){ tone(240, 0, 0.12, 0.045, "triangle", 190); tone(200, 0.13, 0.15, 0.035, "triangle", 160); }
+  }catch(e){}
+}
+// 버튼 종류별 소리
+document.addEventListener("click", e => {
+  const el = e.target.closest(".seg button:not(:disabled), .wz-card, .switch, .stepper button, .acc-head, .consent-cb");
+  if (el) sfx(el.classList.contains("acc-head") ? "open" : "select");
+});
+function renderSfxBtn(){
+  const b = $("tbSfx"); if (!b) return;
+  b.textContent = plain(t(sfxOn ? "top.sfxOn" : "top.sfxOff"));
+  b.setAttribute("aria-label", sfxOn ? "효과음 끄기" : "효과음 켜기");
+}
+document.addEventListener("click", e => {
+  if (!e.target.closest("#tbSfx")) return;
+  sfxOn = !sfxOn; try{ localStorage.setItem("formdot_sfx", sfxOn ? "on" : "off"); }catch(err){}
+  renderSfxBtn(); sfx("select");
+});
+
+/* ---- 토스처럼: 선택 표시가 미끄러지듯 움직이는 버튼 묶음 ---- */
+function placePill(seg){
+  let pill = seg.querySelector(":scope > .seg-pill");
+  if (!pill){ pill = document.createElement("span"); pill.className = "seg-pill"; seg.prepend(pill); seg.classList.add("has-pill"); }
+  const on = seg.querySelector(":scope > button.on");
+  if (!on || !on.offsetWidth){ pill.style.opacity = 0; return; }
+  pill.style.opacity = 1; pill.style.left = on.offsetLeft + "px"; pill.style.width = on.offsetWidth + "px";
+}
+function initPills(){
+  const ro = new ResizeObserver(es => es.forEach(x => placePill(x.target)));
+  const watch = seg => { if (seg.dataset.pill) return; seg.dataset.pill = 1; placePill(seg); ro.observe(seg); };
+  document.querySelectorAll(".seg").forEach(watch);
+  new MutationObserver(ms => {
+    for (const m of ms){
+      if (m.type === "attributes" && m.target.parentElement && m.target.parentElement.classList.contains("seg")) placePill(m.target.parentElement);
+      if (m.type === "childList") m.addedNodes.forEach(n => n.nodeType === 1 && (n.matches(".seg") ? [n] : n.querySelectorAll(".seg")).forEach(watch));
+    }
+  }).observe(document.body, {subtree: true, childList: true, attributes: true, attributeFilter: ["class"]});
+}
+
+/* ---- 금액이 바뀔 때 숫자가 굴러가듯 바뀌는 모션 ---- */
+let totalShown = null, totalAnim = null;
+function setTotal(v){
+  const el = $("total");
+  if (totalShown === null || matchMedia("(prefers-reduced-motion: reduce)").matches){ totalShown = v; el.innerHTML = priceHtml(v); return; }
+  const from = totalShown, t0 = performance.now(), dur = 420;
+  cancelAnimationFrame(totalAnim);
+  const step = now => {
+    const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    totalShown = from + (v - from) * e; el.innerHTML = priceHtml(totalShown);
+    if (k < 1) totalAnim = requestAnimationFrame(step); else totalShown = v;
+  };
+  totalAnim = requestAnimationFrame(step);
+}
+
 /* ================= 진행 상태 ================= */
 const PREF_KEY = "formdot_prefs";
 const prefs = {level: null, mode: null, style: null, student: false};
@@ -1329,10 +1581,11 @@ async function setStudentVideo(file, isTest){
   let sec = await videoDuration(file);
   if (sec === null && isTest) sec = 6;
   if (sec !== null && sec < STUDENT_MIN_SEC){
-    student.file = null; student.ok = false; refreshPrices();
+    student.file = null; student.ok = false; refreshPrices(); sfx("error");
     return stuMsg("bad", t("stu.short", {sec: sec.toFixed(1)}));
   }
   Object.assign(student, {file, sec, ok: true, test: !!isTest});
+  sfx("success");
   renderStudentState(); refreshPrices();
 }
 function stuMsg(cls, msg){ const el = $("stuState"); if (el){ el.className = "stu-state " + cls; el.innerHTML = msg; } }
@@ -1367,6 +1620,7 @@ function bindStudentBox(){
 function refreshPrices(){
   updatePrice();
   if ($("sketch_fee")) { updateReqFee("sketch"); updateReqFee("idea"); }
+  if ($("fileConsent")) $("fileConsent").hidden = !stuOn();
   const chip = $("tbStu");
   chip.hidden = !student.on;
   chip.className = "tb-chip stu" + (student.ok ? "" : " need");
@@ -1384,7 +1638,10 @@ function route(screen){
   $("wizard").hidden = !!inForm; $("formArea").hidden = !inForm;
   if (inForm) renderForm(); else renderScreen(["home","way","pick"].includes(screen) ? screen : "home");
   window.scrollTo(0, 0);
+  animIn(inForm ? $("formArea") : $("wizard"));
 }
+// 화면이 바뀔 때 살짝 떠오르며 나타나는 모션
+function animIn(el){ if (!el) return; el.classList.remove("screen-in"); void el.offsetWidth; el.classList.add("screen-in"); }
 function wzCard(sel, ic, title, d, ex, data, extra, exAlways){
   return `<button class="wz-card${sel ? " sel" : ""}" ${data}><span class="ic">${ic}</span><span>
     <b>${title}</b><span class="d">${d}</span>${ex ? `<span class="ex${exAlways ? "" : " beg-only"}">${ex}</span>` : ""}${extra || ""}</span></button>`;
@@ -1426,7 +1683,11 @@ function renderScreen(step){
       <p class="promo">${t("home.promo")}</p>
       <button class="btn-primary start-btn" id="homeStart">${t("home.start")}</button>
       <h2 class="pf-title">${t("home.pfTitle")}</h2>
-      <div class="pf-grid">${renderPortfolio()}</div></div>`;
+      <div class="pf-grid">${renderPortfolio()}</div>
+      <h2 class="pf-title">${t("faq.title")}</h2>
+      <div class="faq">${[1,2,3,4,5,6].map(i => `<div class="acc"><button type="button" class="acc-head" aria-expanded="false">
+        <span class="acc-t">${t("faq.q" + i)}</span><span class="acc-arrow">›</span></button>
+        <div class="acc-body" hidden>${t("faq.a" + i)}</div></div>`).join("")}</div></div>`;
     $("homeStart").onclick = () => nav("way");
     onLongPress($("homeBrand"), 3000, () => openPin());
     return;
@@ -1502,11 +1763,11 @@ function updatePrice(){
   $("orderBtn").classList.toggle("is-disabled", !ok);
   $("orderBtn").setAttribute("aria-disabled", !ok);
   if (!ok){
-    $("total").textContent = "-"; $("wOut").textContent = "-";
+    $("total").textContent = "-"; $("wOut").textContent = "-"; totalShown = null;
     $("summary").innerHTML = current ? t("price.tooBig") : t("price.empty");
     return {g, m, total, final};
   }
-  $("total").innerHTML = priceHtml(total);
+  setTotal(total);
   $("wOut").textContent = g.toFixed(1) + "g";
   const qty = Math.max(1, parseInt($("qty").value) || 1);
   $("summary").innerHTML = [qty > 1 ? t("price.qtyNote", {n: qty}) : "", stuOn() ? t("price.stuNote") : ""].filter(Boolean).join(" · ");
@@ -1534,8 +1795,10 @@ onLongPress(drop, 3000, testFile);                  // 테스트 모드: 길게 
 let current = null;   // {name, mode:'sliced'|'est', geo, sliced:{g,sec,source}}
 
 async function handleFile(file){
-  $("fileInfo").innerHTML = `<b>${escapeHtml(file.name)}</b> ${t("msg.analyzing")}`;
+  if (file.size > 150*1024*1024){ $("fileInfo").innerHTML = `<span class="err">${t("msg.hugeFile", {mb: 150})}</span>`; sfx("error"); return; }
+  $("fileInfo").innerHTML = `<span class="spin"></span><b>${escapeHtml(file.name)}</b> ${t(file.size > 30*1024*1024 ? "msg.bigFile" : "msg.analyzing")}`;
   $("stats").innerHTML = "";
+  await new Promise(r => setTimeout(r, 40));    // 화면에 진행 표시를 먼저 그린 뒤 분석
   try{
     const buf = await file.arrayBuffer();
     const lower = file.name.toLowerCase();
@@ -1548,12 +1811,13 @@ async function handleFile(file){
     if (!result.geo && !result.sliced) throw new Error("모델 데이터나 슬라이싱 정보를 찾지 못했습니다.");
     current = {name: file.name, file, ...result};
     showResult();
+    sfx(current.tooBig ? "error" : "pop");
   }catch(err){
     console.error(err);
     current = null;
     $("fileInfo").innerHTML = `<span class="err">${t("msg.readFail")}</span>`;
-    $("view").style.display = "none";
-    updatePrice();
+    $("view").style.display = "none"; $("viewHint").hidden = true;
+    updatePrice(); sfx("error");
   }
 }
 
@@ -1584,9 +1848,9 @@ function showResult(){
     const d = current.dims;
     st += `<span>${plain(t("file.rowSize"))} <b style="${current.tooBig ? "color:#ff6b6b" : ""}">${d.map(v=>v.toFixed(1)).join(" × ")} mm</b></span>`;
     st += `<span>부피 <b>${(geo.vol/1000).toFixed(2)} cm³</b></span>`;
-    $("view").style.display = "block";
+    $("view").style.display = "block"; $("viewHint").hidden = false;
     preparePreview(geo);
-  } else $("view").style.display = "none";
+  } else { $("view").style.display = "none"; $("viewHint").hidden = true; }
   $("stats").innerHTML = st;
   updatePrice();
 }
@@ -1931,65 +2195,123 @@ function parseGcodeText(t){
   return {sec, g, plates: 1, source: "G-code 헤더"};
 }
 
-/* ---------------- 3D 미리보기 (간단 캔버스 렌더) ---------------- */
+/* ---------------- 3D 미리보기 ----------------
+   드래그: 회전 · 두 손가락/마우스 휠: 확대·축소 · 두 번 탭: 처음 시점
+   고른 필라멘트 색상으로 보여 주고, 바닥판(10mm 격자)을 함께 그림              */
 const cv = $("view"), ctx = cv.getContext("2d");
-let prev = null, yaw = -0.6, pitch = 0.9;
+const VIEW0 = {yaw: -0.6, pitch: 0.9, zoom: 1};
+let prev = null, yaw = VIEW0.yaw, pitch = VIEW0.pitch, zoom = VIEW0.zoom;
+let autoSpin = false, spinTimer = null;
+const PREVIEW_COLORS = {
+  "흰색": [232,232,228], "검정": [58,58,62], "회색": [150,155,162], "빨강": [229,57,53], "주황": [251,140,0],
+  "노랑": [253,216,53], "초록": [67,160,71], "파랑": [30,136,229], "보라": [142,36,170], "분홍": [236,64,122],
+  "갈색": [141,110,99], "투명": [179,229,252], "기타": [41,98,255]
+};
 function preparePreview(geo){
   const total = geo.tris, maxT = 30000, step = Math.max(1, Math.ceil(total/maxT));
-  const arr = []; let t = 0;
-  for (const ch of geo.chunks) for (let i=0;i<ch.length/9;i++,t++) if (t%step===0) arr.push(ch.subarray(i*9, i*9+9));
+  const tris = [];
+  let n = 0;
+  for (const ch of geo.chunks) for (let i = 0; i < ch.length/9; i++, n++){
+    if (n % step) continue;
+    const t = ch.subarray(i*9, i*9+9);
+    const ux=t[3]-t[0], uy=t[4]-t[1], uz=t[5]-t[2], vx=t[6]-t[0], vy=t[7]-t[1], vz=t[8]-t[2];
+    let nx=uy*vz-uz*vy, ny=uz*vx-ux*vz, nz=ux*vy-uy*vx;
+    const l = Math.hypot(nx,ny,nz) || 1;
+    tris.push({t, n: [nx/l, ny/l, nz/l]});
+  }
   const c = geo.min.map((v,i)=>(v+geo.max[i])/2);
   const r = Math.max(...geo.max.map((v,i)=>v-geo.min[i]))/2 || 1;
-  prev = {tris: arr, c, r};
+  prev = {tris, c, r, min: geo.min, max: geo.max};
+  yaw = VIEW0.yaw; pitch = VIEW0.pitch; zoom = VIEW0.zoom;
+  startSpin(tris.length <= 12000);
   draw();
+}
+function startSpin(on){
+  clearInterval(spinTimer); autoSpin = on;
+  if (on) spinTimer = setInterval(() => {
+    if (!autoSpin || cv.offsetParent === null) return;
+    yaw += 0.02; draw();
+  }, 50);
+}
+function stopSpin(){ autoSpin = false; clearInterval(spinTimer); }
+function previewColor(){
+  const el = $("color");
+  return PREVIEW_COLORS[el && el.value] || [41,98,255];
 }
 function draw(){
   if (!prev) return;
   const dpr = window.devicePixelRatio || 1;
   const W = cv.clientWidth, H = cv.clientHeight;
+  if (!W || !H) return;
   cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
   ctx.clearRect(0,0,W,H);
   const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
-  const s = Math.min(W,H)*0.42/prev.r, {c} = prev;
+  const s = Math.min(W,H)*0.40/prev.r*zoom, {c} = prev;
   const proj = (x,y,z) => {
     x-=c[0]; y-=c[1]; z-=c[2];
-    const x1 = x*cy - y*sy, y1 = x*sy + y*cy;           // Z축 회전
-    const y2 = y1*cp - z*sp, z2 = y1*sp + z*cp;         // X축 기울기
+    const x1 = x*cy - y*sy, y1 = x*sy + y*cy;
+    const y2 = y1*cp - z*sp, z2 = y1*sp + z*cp;
     return [W/2 + x1*s, H/2 - z2*s, y2];
   };
+  // 바닥판 격자 (10mm)
+  const z0 = prev.min[2], pad = 10;
+  const gx0 = Math.floor((prev.min[0]-pad)/10)*10, gx1 = Math.ceil((prev.max[0]+pad)/10)*10;
+  const gy0 = Math.floor((prev.min[1]-pad)/10)*10, gy1 = Math.ceil((prev.max[1]+pad)/10)*10;
+  if ((gx1-gx0)/10 + (gy1-gy0)/10 < 120){
+    ctx.strokeStyle = "rgba(255,255,255,.08)"; ctx.lineWidth = 1; ctx.beginPath();
+    for (let x = gx0; x <= gx1; x += 10){ const a = proj(x,gy0,z0), b = proj(x,gy1,z0); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); }
+    for (let y = gy0; y <= gy1; y += 10){ const a = proj(gx0,y,z0), b = proj(gx1,y,z0); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); }
+    ctx.stroke();
+  }
   const list = [];
-  for (const t of prev.tris){
+  for (const {t, n} of prev.tris){
     const a = proj(t[0],t[1],t[2]), b = proj(t[3],t[4],t[5]), d = proj(t[6],t[7],t[8]);
-    // 법선 (밝기용)
-    const ux3=t[3]-t[0], uy3=t[4]-t[1], uz3=t[5]-t[2], vx3=t[6]-t[0], vy3=t[7]-t[1], vz3=t[8]-t[2];
-    let nx=uy3*vz3-uz3*vy3, ny=uz3*vx3-ux3*vz3, nz=ux3*vy3-uy3*vx3;
-    const l = Math.hypot(nx,ny,nz)||1; nx/=l; ny/=l; nz/=l;
-    const vnx = nx*cy - ny*sy, vny0 = nx*sy + ny*cy;
-    const vny = vny0*cp - nz*sp, vnz = vny0*sp + nz*cp;
-    const light = Math.abs(-0.3*vnx + -0.75*vny + 0.6*vnz);
+    const vnx = n[0]*cy - n[1]*sy, vny0 = n[0]*sy + n[1]*cy;
+    const vny = vny0*cp - n[2]*sp, vnz = vny0*sp + n[2]*cp;
+    const light = Math.abs(-0.3*vnx - 0.75*vny + 0.6*vnz);
     list.push([a[2]+b[2]+d[2], a, b, d, light]);
   }
   list.sort((p,q)=>q[0]-p[0]);
-  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const [R,G,B] = previewColor();
   for (const [, a, b, d, L] of list){
-    const k = 0.35 + 0.65*L;
-    const col = `rgb(${30+60*k|0},${80+90*k|0},${190+65*k|0})`;
+    const k = 0.42 + 0.58*L;
+    const col = `rgb(${Math.min(255, R*k+18)|0},${Math.min(255, G*k+18)|0},${Math.min(255, B*k+22)|0})`;
     ctx.fillStyle = col; ctx.strokeStyle = col; ctx.lineWidth = 0.5;
     ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.lineTo(d[0],d[1]); ctx.closePath();
     ctx.fill(); ctx.stroke();
   }
 }
-let dragging = null;
-cv.addEventListener("pointerdown", e => { dragging = [e.clientX, e.clientY]; cv.setPointerCapture(e.pointerId); });
-cv.addEventListener("pointermove", e => {
-  if (!dragging) return;
-  yaw += (e.clientX - dragging[0]) * 0.01;
-  pitch = Math.max(-1.5, Math.min(1.5, pitch + (e.clientY - dragging[1]) * 0.01));
-  dragging = [e.clientX, e.clientY];
-  requestAnimationFrame(draw);
+// 조작: 한 손가락/마우스 = 회전, 두 손가락 = 확대, 휠 = 확대, 두 번 탭 = 처음 시점
+const pts = new Map();
+let lastPinch = null, lastTap = 0;
+const redraw = () => requestAnimationFrame(draw);
+cv.addEventListener("pointerdown", e => {
+  stopSpin(); cv.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
+  if (pts.size === 1){
+    const now = Date.now();
+    if (now - lastTap < 300){ yaw = VIEW0.yaw; pitch = VIEW0.pitch; zoom = VIEW0.zoom; redraw(); }
+    lastTap = now;
+  }
 });
-cv.addEventListener("pointerup", () => dragging = null);
-window.addEventListener("resize", () => requestAnimationFrame(draw));
+cv.addEventListener("pointermove", e => {
+  if (!pts.has(e.pointerId)) return;
+  const old = pts.get(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]);
+  if (pts.size === 1){
+    yaw += (e.clientX - old[0]) * 0.01;
+    pitch = Math.max(-1.5, Math.min(1.5, pitch + (e.clientY - old[1]) * 0.01));
+  } else if (pts.size === 2){
+    const [p1, p2] = [...pts.values()], dist = Math.hypot(p1[0]-p2[0], p1[1]-p2[1]);
+    if (lastPinch) zoom = Math.max(0.4, Math.min(5, zoom * dist / lastPinch));
+    lastPinch = dist;
+  }
+  redraw();
+});
+const ptEnd = e => { pts.delete(e.pointerId); if (pts.size < 2) lastPinch = null; };
+cv.addEventListener("pointerup", ptEnd);
+cv.addEventListener("pointercancel", ptEnd);
+cv.addEventListener("wheel", e => { e.preventDefault(); stopSpin(); zoom = Math.max(0.4, Math.min(5, zoom * (e.deltaY < 0 ? 1.12 : 1/1.12))); redraw(); }, {passive: false});
+window.addEventListener("resize", redraw);
+document.addEventListener("change", e => { if (e.target.id === "color" || e.target.id === "q_color") redraw(); });
 
 
 /* ================= 주문 / 요청 ================= */
@@ -2004,7 +2326,7 @@ function orderData(){
          [L("file.rowQQ"), quickText("quality")], [L("file.rowQP"), quickText("support")]]
       : settingsList(false);
   const settings = [[L("file.rowStyle"), styleText()], ...optRows, [L("file.rowQty"), qty + "개"],
-    ...(stuOn() ? [[L("stu.rowLabel"), L("stu.rowValue")]] : [])];
+    ...(stuOn() ? [[L("stu.rowLabel"), L("stu.rowValue")], [L("consent.row"), L("consent.rowVal")]] : [])];
   return {type: "file", typeLabel: noEmoji(t("mode.file")), test: !!current.test, student: stuOn(), printMin: Math.round(m), weightG: +g.toFixed(1),
           name: (current.test ? "[테스트] " : "") + current.name,
           total: won(final) + (stuOn() ? ` (${L("pick.stuTag")})` : ""),
@@ -2015,12 +2337,15 @@ const rows = arr => arr.map(([k,v]) => `<tr><th>${escapeHtml(k)}</th><td class="
 let lastOrder = null, pending = null;
 
 $("orderBtn").addEventListener("click", () => {
-  if (!current || current.tooBig){ if (!current) toast(plain(t("msg.needFile"))); return; }
-  openConfirm(orderData(), [{file: current.file, kind: "model"}, ...studentFiles()]);
+  if (!current || current.tooBig){ if (!current) toast(plain(t("msg.needFile"))); sfx("error"); return; }
+  if (!checkConsent("fileConsent")) return;
+  const d = orderData(); d.consent = stuOn();
+  openConfirm(d, [{file: current.file, kind: "model"}, ...studentFiles()]);
 });
 function openConfirm(d, files){
   if (EDIT){ toast("✏️ 편집 모드에서는 주문이 접수되지 않아요"); return; }
   pending = {d, files};
+  sfx("open");
   const isReq = d.type !== "file";
   $("cfTitle").textContent = plain(t(isReq ? "confirm.req" : "confirm.order"));
   $("cfLabel").textContent = plain(t(isReq ? "confirm.reqLbl" : "confirm.fileLbl"));
@@ -2066,6 +2391,7 @@ $("cfOk").addEventListener("click", async () => {
   showView("orderView");
 });
 function showDone(d){
+  sfx("success");
   const isReq = d.type !== "file";
   $("doneTitle").textContent = plain(t(isReq ? "done.req.title" : "done.order.title"));
   $("doneSub").textContent = plain(t(isReq ? "done.req.sub" : "done.order.sub"));
@@ -2088,6 +2414,7 @@ function resetReqForm(mode){
     else if (!["cname","contact"].includes(f.id)) $(id).value = "";
   }
   reqTest[mode] = false;
+  const cb = document.querySelector(`#${mode}_consent .consent-cb`); if (cb) cb.checked = false;
 }
 $("orderCopyBtn").addEventListener("click", () => {
   if (!lastOrder) return;
@@ -2124,7 +2451,11 @@ function initUI(){
   renderQuickSegs();
   renderReqMode("sketch");
   renderReqMode("idea");
+  $("fileConsentSlot").innerHTML = consentHtml("fileConsent");
+  $("fileConsent").hidden = true;
   bindStoreLinks();
+  initPills();
+  renderSfxBtn();
   onLongPress(document.querySelector("#formArea .adminTrigger"), 3000, () => openPin());
   const wantAdmin = location.hash === "#admin";
   history.replaceState({screen: "home"}, "", wantAdmin ? location.pathname + location.search : undefined);
@@ -2206,7 +2537,7 @@ async function submitOrder(d, files, progress){
   }
   progress("정보 저장 중…");
   await D.set(D.ref(db, "orders/" + no), {
-    no, type: d.type, name: d.name, total: d.total, contact: d.contact || "", test: !!d.test, student: !!d.student, designFee: d.designFee || 0, printMin: d.printMin || 0, weightG: d.weightG || 0,
+    no, type: d.type, name: d.name, total: d.total, contact: d.contact || "", test: !!d.test, student: !!d.student, designFee: d.designFee || 0, printMin: d.printMin || 0, weightG: d.weightG || 0, consent: d.consent ? "개인정보 수집·이용 동의" : "",
     sections: d.sections.map(([t, r]) => ({t, rows: r.map(([k, v]) => ({k, v}))})),
     attachments, status: "new", createdAt: D.serverTimestamp()
   });
@@ -2214,7 +2545,22 @@ async function submitOrder(d, files, progress){
 }
 
 
-/* ================= 사이트 설정 (문구 · 포트폴리오) ================= */
+/* ================= 사이트 설정 (문구 · 포트폴리오 · 가격) ================= */
+// 코드에 적힌 처음 가격 (관리자 > 가격 설정의 "기본값으로")
+const PRICE_DEFAULTS = JSON.parse(JSON.stringify({filament: FILAMENT_PRICE, print: PRINT_PRICE,
+  design: {sketch: DESIGN_FEE.sketch, idea: DESIGN_FEE.idea, baseMin: DESIGN_BASE_MIN, stepMin: DESIGN_STEP_MIN, stepFee: DESIGN_STEP_FEE},
+  studentRate: STUDENT_RATE}));
+function applySettings(st){
+  if (!st) return;
+  const num = (v, d) => isFinite(+v) && v !== "" && v !== null ? +v : d;
+  for (const k in FILAMENT_PRICE) FILAMENT_PRICE[k] = num((st.filament || {})[k], FILAMENT_PRICE[k]);
+  for (const k in PRINT_PRICE) PRINT_PRICE[k] = num((st.print || {})[k], PRINT_PRICE[k]);
+  const ds = st.design || {};
+  DESIGN_FEE.sketch = num(ds.sketch, DESIGN_FEE.sketch); DESIGN_FEE.idea = num(ds.idea, DESIGN_FEE.idea);
+  DESIGN_BASE_MIN = num(ds.baseMin, DESIGN_BASE_MIN); DESIGN_STEP_MIN = Math.max(1, num(ds.stepMin, DESIGN_STEP_MIN));
+  DESIGN_STEP_FEE = num(ds.stepFee, DESIGN_STEP_FEE);
+  STUDENT_RATE = Math.min(0.9, Math.max(0, num(st.studentRate, STUDENT_RATE)));
+}
 const encKey = k => k.replace(/\./g, "~"), decKey = k => k.replace(/~/g, ".");
 const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), ms))]);
 async function loadSite(){
@@ -2222,7 +2568,8 @@ async function loadSite(){
   try{
     const {db, D} = await withTimeout(fb(), 6000);
     const v = (await withTimeout(D.get(D.ref(db, "site")), 6000)).val() || {};
-    SITE.text = v.text || {}; SITE.portfolio = v.portfolio || {};
+    SITE.text = v.text || {}; SITE.portfolio = v.portfolio || {}; SITE.settings = v.settings || null;
+    applySettings(SITE.settings);
   }catch(e){ console.warn("사이트 설정을 불러오지 못했어요", e); }
   TOV = Object.fromEntries(Object.entries(SITE.text).map(([k, v]) => [decKey(k), v]));
 }
@@ -2290,8 +2637,9 @@ async function openAdmin(){
 }
 function setTab(tab){
   $("adminTabs").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
-  ["orders","portfolio","texts"].forEach(x => $("tab-" + x).hidden = x !== tab);
+  ["orders","portfolio","texts","settings"].forEach(x => $("tab-" + x).hidden = x !== tab);
   if (tab === "portfolio") renderPfAdmin();
+  if (tab === "settings") renderSettings();
   if (tab === "texts") renderTexts();
 }
 $("adminTabs").onclick = e => { const b = e.target.closest("button[data-tab]"); if (b) setTab(b.dataset.tab); };
@@ -2319,7 +2667,7 @@ function calcHtml(o){
       <label>출력 무게 (g, 전체)<input type="number" min="0" step="0.1" data-c="g" value="${q.g ?? ""}"></label>
       <label>출력 시간 (분, 전체)<input type="number" min="0" step="1" data-c="m" value="${q.m ?? ""}"></label>
       <label>재료<select data-c="mat">${Object.keys(FILAMENT_PRICE).map(k => `<option value="${k}"${(q.mat || "PLA") === k ? " selected" : ""}>${optLabel("mat", k)}</option>`).join("")}</select></label>
-      <label class="chk"><input type="checkbox" data-c="stu"${(q.stu ?? o.student) ? " checked" : ""}> 학생 할인 15%</label>
+      <label class="chk"><input type="checkbox" data-c="stu"${(q.stu ?? o.student) ? " checked" : ""}> 학생 할인 ${Math.round(STUDENT_RATE * 100)}%</label>
     </div>
     <div class="calc-out" id="calc-${no}"></div>
     <div class="oc-btns"><button class="btn-primary" data-act="quote" data-no="${no}">이 견적 저장</button>
@@ -2334,17 +2682,44 @@ function calcCompute(no){
   const mat = v("mat").value, stu = v("stu").checked;
   const design = designFee(o.type, dmin), print = (g || m) ? printPrice(mat, g, m) : 0;
   const sub = design + print, final = stu ? stuPrice(sub) : sub;
-  const text = `디자인비 ${won(design)} (${dmin}분) + 출력비 ${won(print)} (${optLabel("mat", mat)} ${g}g · ${m}분)` + (stu ? " − 학생 할인 15%" : "");
+  const text = `디자인비 ${won(design)} (${dmin}분) + 출력비 ${won(print)} (${optLabel("mat", mat)} ${g}g · ${m}분)` + (stu ? ` − 학생 할인 ${Math.round(STUDENT_RATE * 100)}%` : "");
   $("calc-" + no).innerHTML = `${escapeHtml(text)}<br><b style="font-size:17px;color:var(--accent-text)">합계 ${won(final)}</b>`;
   return {dmin, g, m, mat, stu, design: Math.round(design), print: Math.round(print), total: won(final), text};
 }
+const STATUS = [["new","🆕 새 주문"],["checked","👀 확인함"],["making","🖨 제작 중"],["done","✅ 완료"]];
+const stLabel = s => (STATUS.find(x => x[0] === s) || STATUS[0])[1];
+const ordFilter = {q: "", type: "all", st: "all"};
+const wonNum = s => +(String(s || "").match(/[\d,]+(?=원)/g) || ["0"]).slice(-1)[0].replace(/,/g, "");
+function renderSummary(all){
+  const real = all.filter(o => !o.test), now = new Date();
+  const thisMonth = real.filter(o => { const d = new Date(o.createdAt || 0); return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth(); });
+  const money = thisMonth.reduce((a, o) => a + (o.quote ? wonNum(o.quote.total) : o.type === "file" ? wonNum(o.total) : 0), 0);
+  const tile = (n, l) => `<div class="tile"><small>${l}</small><b>${n}</b></div>`;
+  $("adminSum").innerHTML = tile(real.filter(o => ["new","checked"].includes(o.status || "new")).length + "건", "처리 대기")
+    + tile(real.filter(o => o.status === "making").length + "건", "제작 중")
+    + tile(thisMonth.length + "건", `${now.getMonth() + 1}월 주문`)
+    + tile(money.toLocaleString("ko-KR") + "원", `${now.getMonth() + 1}월 금액 (확정·파일 주문)`);
+}
 function renderOrders(){
-  const list = Object.values(ordersData).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-  const nNew = list.filter(o => o.status !== "done").length;
-  $("adminSub").textContent = `전체 ${list.length}건 · 처리 대기 ${nNew}건`;
-  if (!list.length){ $("adminList").innerHTML = '<div class="card" style="text-align:center;color:var(--muted)">아직 들어온 주문이 없어요.</div>'; return; }
+  const all = Object.values(ordersData).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  renderSummary(all);
+  const q = ordFilter.q.trim().toLowerCase();
+  const list = all.filter(o => {
+    const st = o.status || "new";
+    if (ordFilter.type !== "all" && (o.type || "file") !== ordFilter.type) return false;
+    if (ordFilter.st === "open" && !["new","checked"].includes(st)) return false;
+    if (["making","done"].includes(ordFilter.st) && st !== ordFilter.st) return false;
+    if (ordFilter.st === "test" && !o.test) return false;
+    if (q){
+      const hay = [o.no, o.name, o.contact, ...valsOf(o.sections).flatMap(s => valsOf(s.rows).map(r => r.v))].join(" ").toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  $("adminSub").textContent = `전체 ${all.length}건 중 ${list.length}건 보기`;
+  if (!list.length){ $("adminList").innerHTML = `<div class="card" style="text-align:center;color:var(--muted)">${all.length ? "조건에 맞는 주문이 없어요." : "아직 들어온 주문이 없어요."}</div>`; return; }
   $("adminList").innerHTML = list.map(o => {
-    const done = o.status === "done", no = escapeHtml(o.no), type = o.type || "file";
+    const status = o.status || "new", done = status === "done", no = escapeHtml(o.no), type = o.type || "file";
     let body;
     if (o.sections){
       body = valsOf(o.sections).map(sec => valsOf(sec.rows).filter(r => !["연락처","이름","요청 종류","무엇인가요?","만들고 싶은 것"].includes(r.k))
@@ -2357,13 +2732,13 @@ function renderOrders(){
     }
     const who = o.sections ? valsOf(o.sections).flatMap(sec => valsOf(sec.rows)).filter(r => r.k === "이름" || r.k === "연락처") : [];
     const atts = attachmentsOf(o);
-    const hasImg = atts.some(a => /^image\//.test(a.mime || "")), hasVid = atts.some(a => /^video\//.test(a.mime || ""));
+    const hasImg = atts.some(a => /^image\//.test(a.mime || "")), hasVid = atts.some(a => /^video\//.test(a.mime || "") && !a.deleted);
     return `<div class="order-card ${done ? "done" : ""}">
       <div class="oc-top"><span class="oc-no">${no}</span>
         <span class="oc-type">${TYPE_LABEL[type] || type}</span>
         ${o.student ? '<span class="st" style="background:#ede9fe;color:#5b21b6">🎓 학생 (영상 확인)</span>' : ""}
         ${o.test ? '<span class="st test">🛠 테스트</span>' : ""}
-        <span class="st ${done ? "done" : "new"}">${done ? "처리 완료" : "새 주문"}</span>
+        <span class="st st-${status}">${stLabel(status)}</span>
         <span class="oc-date">${fmtDate(o.createdAt)}</span></div>
       ${type !== "file" ? `<div style="font-size:17px;font-weight:700;margin-bottom:4px">${escapeHtml(o.name)}</div>` : ""}
       ${who.length ? `<div class="oc-contact">📞 ${who.map(r => `${escapeHtml(r.k)}: <b>${escapeHtml(r.v)}</b>`).join(" · ")}</div>` : ""}
@@ -2372,13 +2747,15 @@ function renderOrders(){
       ${o.printMin ? `<div class="oc-contact">⏱ 예상 출력 시간 <b>${fmtMin(o.printMin)}</b> · 예상 무게 <b>${o.weightG}g</b> <span class="note">(관리자만 보여요)</span></div>` : ""}
       ${o.quote ? `<div class="quote-line">✅ 확정 견적 ${escapeHtml(o.quote.total)} <span class="note">${escapeHtml(o.quote.text)}</span></div>` : ""}
       ${atts.length ? `<div class="oc-files">${atts.map((a, i) =>
-          `<button data-act="dl" data-i="${i}" data-no="${no}">⬇ ${a.kind === "student" ? "🎓 " : ""}${escapeHtml(a.name)} (${kb(a.bytes || 0)})</button>`).join("")}</div>` : ""}
+          a.deleted ? `<button disabled>🎓 ${escapeHtml(a.name)} (삭제됨)</button>`
+          : `<button data-act="dl" data-i="${i}" data-no="${no}">⬇ ${a.kind === "student" ? "🎓 " : ""}${escapeHtml(a.name)} (${kb(a.bytes || 0)})</button>`
+            + (a.kind === "student" ? `<button class="btn-danger" data-act="delvid" data-i="${i}" data-no="${no}">🗑 인증 영상 삭제</button>` : "")).join("")}</div>` : ""}
       <div class="oc-thumbs" id="thumbs-${no}"></div>
       ${type !== "file" ? calcHtml(o) : ""}
       <div class="oc-btns">
         ${hasImg ? `<button class="btn-primary" data-act="preview" data-no="${no}">첨부 사진 보기</button>` : ""}
         ${hasVid ? `<button class="btn-primary" data-act="video" data-no="${no}">🎓 인증 영상 보기</button>` : ""}
-        <button data-act="toggle" data-no="${no}">${done ? "새 주문으로 되돌리기" : "처리 완료로 표시"}</button>
+        <select class="status-sel" data-no="${no}" aria-label="주문 상태">${STATUS.map(([v, l]) => `<option value="${v}"${v === status ? " selected" : ""}>${l}</option>`).join("")}</select>
         <button class="btn-danger" data-act="del" data-no="${no}">삭제</button>
       </div></div>`;
   }).join("");
@@ -2393,7 +2770,19 @@ async function loadAttachment(no, a){
   return a.mime ? new Blob([blob], {type: a.mime}) : blob;
 }
 $("adminList").addEventListener("input", e => { const g = e.target.closest(".calc-grid"); if (g) calcCompute(g.dataset.no); });
-$("adminList").addEventListener("change", e => { const g = e.target.closest(".calc-grid"); if (g) calcCompute(g.dataset.no); });
+$("adminList").addEventListener("change", async e => {
+  const g = e.target.closest(".calc-grid"); if (g) return calcCompute(g.dataset.no);
+  if (e.target.classList.contains("status-sel")){
+    try{ const {db, D} = await fb(); await D.set(D.ref(db, `orders/${e.target.dataset.no}/status`), e.target.value); toast("상태를 바꿨어요: " + stLabel(e.target.value)); }
+    catch(err){ alert("실패했어요: " + (err.code || err.message)); }
+  }
+});
+$("ordSearch").addEventListener("input", () => { ordFilter.q = $("ordSearch").value; renderOrders(); });
+$("ordType").addEventListener("change", () => { ordFilter.type = $("ordType").value; renderOrders(); });
+$("ordFilter").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  ordFilter.st = b.dataset.v; $("ordFilter").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); renderOrders();
+});
 $("adminList").addEventListener("click", async e => {
   const b = e.target.closest("button[data-act]"); if (!b) return;
   const no = b.dataset.no, o = ordersData[no]; if (!o) return;
@@ -2426,8 +2815,13 @@ $("adminList").addEventListener("click", async e => {
     } else if (b.dataset.act === "quoteCopy"){
       const q = calcCompute(no); if (!q) return;
       copyText(`[FORMDOT. 견적 안내] 요청번호 ${no}\n${o.name}\n${q.text}\n최종 금액: ${q.total}\n스마트스토어 주문 시 옵션에 요청번호 ${no}를 입력해 주세요.`, b);
-    } else if (b.dataset.act === "toggle"){
-      await D.set(D.ref(db, `orders/${no}/status`), o.status === "done" ? "new" : "done");
+    } else if (b.dataset.act === "delvid"){
+      const i = +b.dataset.i, a = attachmentsOf(o)[i];
+      if (!confirm(`${no}번 주문의 학생 인증 영상을 삭제할까요?\n확인이 끝났다면 지우는 게 좋아요. 되돌릴 수 없어요.`)) return;
+      const up = {[`orders/${no}/attachments/${i}/deleted`]: true};
+      for (let k = a.start; k < a.start + a.count; k++) up[`files/${no}/${k}`] = null;
+      await D.update(D.ref(db), up);
+      toast("인증 영상을 삭제했어요");
     } else if (b.dataset.act === "del"){
       if (!confirm(`${no} (${o.name})을(를) 삭제할까요?\n첨부 파일도 함께 지워지고 되돌릴 수 없어요.`)) return;
       await D.update(D.ref(db), {[`orders/${no}`]: null, [`files/${no}`]: null, [`orderNos/${no}`]: null});
@@ -2505,18 +2899,76 @@ $("pfAdd").addEventListener("click", async () => {
   }catch(err){ console.error(err); $("pfMsg").textContent = "실패했어요: " + (err.code || err.message); }
 });
 
+/* ---- 가격 설정 (코드 수정 없이) ---- */
+function renderSettings(){
+  const f = (id, label, val, unit, step = 1) => `<label class="set-row"><span>${label}</span>
+    <span class="set-in"><input type="number" id="${id}" value="${val}" step="${step}" min="0">${unit ? `<em>${unit}</em>` : ""}</span></label>`;
+  $("setForm").innerHTML = `
+    <div class="card sec"><h2>🧵 필라멘트 1kg 가격</h2><p class="note" style="margin-top:0">1g 재료비 = 이 가격 ÷ 1000</p>
+      ${Object.keys(FILAMENT_PRICE).map(k => f("set-fil-" + k, optLabel("mat", k), FILAMENT_PRICE[k], "원", 100)).join("")}</div>
+    <div class="card sec"><h2>🖨 출력비</h2>
+      <p class="note" style="margin-top:0">출력비 = (재료비 + 분당 기계비 × 출력 분 + 기본비) × 마진 배율</p>
+      ${f("set-perMin", "분당 기계비", PRINT_PRICE.perMin, "원", 0.1)}${f("set-base", "기본비 (주문 1건)", PRINT_PRICE.base, "원", 100)}
+      ${f("set-margin", "마진 배율 (1.4 = 1.4배)", PRINT_PRICE.margin, "배", 0.05)}</div>
+    <div class="card sec"><h2>✏️ 디자인비</h2>
+      ${f("set-sketch", "스케치·도면 기본", DESIGN_FEE.sketch, "원", 500)}${f("set-idea", "아이디어 기본", DESIGN_FEE.idea, "원", 500)}
+      ${f("set-baseMin", "기본에 포함된 시간", DESIGN_BASE_MIN, "분", 10)}${f("set-stepMin", "초과 시 단위", DESIGN_STEP_MIN, "분", 5)}
+      ${f("set-stepFee", "단위마다 추가 금액", DESIGN_STEP_FEE, "원", 100)}</div>
+    <div class="card sec"><h2>🎓 학생 할인</h2>${f("set-stu", "할인율", Math.round(STUDENT_RATE * 100), "%", 1)}</div>
+    <div class="card sec"><h2>👀 미리보기</h2><div id="setPreview" class="note" style="margin:0;font-size:14px"></div></div>`;
+  setPreview();
+}
+function readSettings(){
+  const v = id => +$(id).value;
+  return {
+    filament: Object.fromEntries(Object.keys(FILAMENT_PRICE).map(k => [k, v("set-fil-" + k)])),
+    print: {perMin: v("set-perMin"), base: v("set-base"), margin: v("set-margin")},
+    design: {sketch: v("set-sketch"), idea: v("set-idea"), baseMin: v("set-baseMin"), stepMin: Math.max(1, v("set-stepMin")), stepFee: v("set-stepFee")},
+    studentRate: Math.min(90, Math.max(0, v("set-stu"))) / 100
+  };
+}
+function setPreview(){
+  const s = readSettings();
+  const pr = (k, g, m) => ((s.filament[k] / 1000) * g + s.print.perMin * m + s.print.base) * s.print.margin;
+  const ds = (base, min) => base + Math.ceil(Math.max(0, min - s.design.baseMin) / s.design.stepMin) * s.design.stepFee;
+  const w = n => Math.round(n).toLocaleString("ko-KR") + "원", r = s.studentRate;
+  $("setPreview").innerHTML = `· 20mm 정육면체 (PLA 4.1g · 15분) 출력비 <b>${w(pr("PLA", 4.1, 15))}</b> (학생 ${w(pr("PLA", 4.1, 15) * (1 - r))})<br>
+    · 큰 출력물 (PLA 100g · 5시간) 출력비 <b>${w(pr("PLA", 100, 300))}</b><br>
+    · 스케치 디자인 1시간 30분 → <b>${w(ds(s.design.sketch, 90))}</b> · 아이디어 2시간 → <b>${w(ds(s.design.idea, 120))}</b>`;
+}
+$("setForm").addEventListener("input", setPreview);
+$("setReset").addEventListener("click", () => {
+  if (!confirm("코드에 적힌 처음 가격으로 되돌릴까요? (저장을 눌러야 적용돼요)")) return;
+  const keep = JSON.parse(JSON.stringify(PRICE_DEFAULTS));
+  Object.assign(FILAMENT_PRICE, keep.filament); Object.assign(PRINT_PRICE, keep.print);
+  DESIGN_FEE.sketch = keep.design.sketch; DESIGN_FEE.idea = keep.design.idea; DESIGN_BASE_MIN = keep.design.baseMin;
+  DESIGN_STEP_MIN = keep.design.stepMin; DESIGN_STEP_FEE = keep.design.stepFee; STUDENT_RATE = keep.studentRate;
+  renderSettings();
+});
+$("setSave").addEventListener("click", async () => {
+  const s = readSettings();
+  $("setMsg").textContent = "저장 중…";
+  try{
+    const {db, D} = await fb();
+    await D.set(D.ref(db, "site/settings"), s);
+    SITE.settings = s; applySettings(s); refreshPrices();
+    $("setMsg").textContent = "저장했어요. 손님 화면에 바로 적용돼요.";
+    toast("💰 가격 설정을 저장했어요");
+  }catch(err){ console.error(err); $("setMsg").textContent = "저장 실패: " + (err.code || err.message); }
+});
+
 /* ---- 사이트 문구 편집 ---- */
 const TX_GROUPS = [["brand","브랜드 이름"],["home","시작 화면"],["nav","이동 버튼"],["way","진행 방식 화면"],["stu","학생 할인"],
   ["pick","의뢰 선택 화면"],["mode","의뢰 종류 이름"],["top","주문 화면 위쪽"],["file","3D 파일 화면"],["quick","빠른 모드 옵션"],
   ["price","견적 카드"],["opt","출력 옵션 (상세 모드)"],["req","스케치·아이디어 화면"],["confirm","확인창"],["done","완료 화면"],
-  ["copy","복사 창"],["msg","안내 · 오류 메시지"]];
+  ["copy","복사 창"],["msg","안내 · 오류 메시지"],["consent","개인정보 동의"],["faq","자주 묻는 질문"]];
 function renderTexts(){
   const groups = {};
   for (const k of Object.keys(TDEF)) (groups[k.split(".")[0]] ||= []).push(k);
   const order = TX_GROUPS.map(x => x[0]).concat(Object.keys(groups).filter(g => !TX_GROUPS.some(x => x[0] === g)));
   $("txList").innerHTML = order.filter(g => groups[g]).map(g => `<details class="tx-group" data-g="${g}">
     <summary>${(TX_GROUPS.find(x => x[0] === g) || [g, g])[1]} <small style="color:var(--muted);font-weight:400">(${groups[g].length}개)</small></summary>
-    ${groups[g].map(k => { const cur = tRaw(k), def = TDEF[k]; return `<div class="tx-row${cur !== def ? " changed" : ""}" data-k="${escapeHtml(k)}">
+    ${groups[g].map(k => { const cur = tSrc(k), def = TDEF[k]; return `<div class="tx-row${cur !== def ? " changed" : ""}" data-k="${escapeHtml(k)}">
       <div class="tx-def">기본: ${escapeHtml(plain(def)).slice(0, 140)} <code>${escapeHtml(k)}</code></div>
       <textarea rows="${Math.min(6, Math.max(1, Math.ceil(String(cur).length / 55)))}">${escapeHtml(cur)}</textarea>
       <button class="link-btn" data-tx="reset">기본값으로</button></div>`; }).join("")}</details>`).join("");
@@ -2600,7 +3052,7 @@ let txKey = null;
 function openTxEditor(key){
   if (!(key in TDEF)) return;
   txKey = key;
-  const def = TDEF[key], cur = tRaw(key);
+  const def = TDEF[key], cur = tSrc(key);
   $("txmKey").textContent = key;
   $("txmDef").textContent = plain(def);
   $("txmVal").value = cur;
@@ -2622,7 +3074,7 @@ $("txmSave").onclick = async () => {
   }catch(err){ console.error(err); $("txmMsg").textContent = "저장 실패: " + (err.code || err.message); return; }
   $("txModal").hidden = true;
   // {가격} 같은 자동 값이 들어가는 문구는 화면을 다시 불러와야 바르게 보임
-  if (/\{\w+\}/.test(TDEF[key])){ location.reload(); return; }
+  if (/\{\w+\}/.test(TDEF[key] + val)){ location.reload(); return; }
   const sel = `[data-tk="${CSS.escape(key)}"],[data-t="${CSS.escape(key)}"]`;
   document.querySelectorAll(sel).forEach(el => { el.innerHTML = val; el.classList.add("tx-flash"); setTimeout(() => el.classList.remove("tx-flash"), 1200); });
   toast("✅ 저장했어요 · 손님 화면에도 바로 반영돼요");
