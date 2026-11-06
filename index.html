@@ -360,7 +360,7 @@ button:hover{border-color:var(--accent)}
 .narrow{max-width:680px;margin:0 auto}
 .sec{margin-bottom:14px}
 .sec h2{display:flex;align-items:center;gap:8px;font-size:17px}
-.num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;
+.snum{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;
   background:var(--accent);color:#fff;font-size:13px;font-weight:800;flex:none}
 .sec-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .sec-head h2{margin:0}
@@ -496,6 +496,28 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
   .topbar{gap:6px}
   .tb-right{width:100%;justify-content:flex-end}
 }
+
+/* ---- 주문 조회 ---- */
+.home-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.home-btns .start-btn{margin-top:0;min-width:150px}
+.start-btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--text);font-weight:700;border-radius:99px}
+.start-btn.ghost:hover{border-color:var(--accent)}
+.lk-card{margin-top:4px}
+.lk-head{display:flex;align-items:center;gap:10px}
+.lk-no{font-size:30px;font-weight:800;letter-spacing:4px;color:var(--accent-text)}
+.lk-name{font-size:16px;font-weight:700;margin-top:4px;word-break:break-all}
+.lk-steps{list-style:none;display:flex;margin:18px 0 6px;padding:0;position:relative}
+.lk-steps li{flex:1;text-align:center;font-size:12.5px;color:var(--muted);position:relative}
+.lk-steps li i{display:block;width:16px;height:16px;border-radius:50%;margin:0 auto 6px;background:var(--line);position:relative;z-index:1;transition:.3s}
+.lk-steps li:not(:first-child)::before{content:"";position:absolute;top:7px;right:50%;width:100%;height:2px;background:var(--line)}
+.lk-steps li.past i,.lk-steps li.now i{background:var(--accent)}
+.lk-steps li.past::before,.lk-steps li.now::before{background:var(--accent)!important}
+.lk-steps li.now i{box-shadow:0 0 0 6px rgba(41,98,255,.25);animation:lkPulse 1.6s ease-in-out infinite}
+.lk-steps li.now span{color:var(--text);font-weight:700}
+@keyframes lkPulse{50%{box-shadow:0 0 0 10px rgba(41,98,255,.08)}}
+.lk-desc{margin-top:12px;font-size:15px;word-break:keep-all}
+.lk-meta{margin-top:8px;font-size:13px;color:var(--muted)}
+.lk-hint{margin-top:8px;font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -519,7 +541,7 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
 
    <div id="mode-file" class="mode-panel narrow">
      <section class="card sec">
-       <h2><span class="num">1</span><span data-t="file.title">3D 파일 올리기</span></h2>
+       <h2><span class="snum">1</span><span data-t="file.title">3D 파일 올리기</span></h2>
        <div class="guide beg-only" data-t="file.guide">💡 STL·3MF는 3D 모델 파일이에요. MakerWorld·Thingiverse에서 받은 파일이나 직접 만든 파일을 올려 주세요. 뱀부 스튜디오에서 슬라이싱한 파일(.gcode.3mf)이면 가장 정확해요.</div>
        <div id="drop" class="lp" tabindex="0">
          <b data-t="file.drop">여기로 파일을 끌어다 놓거나 클릭하세요</b>
@@ -534,7 +556,7 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
 
      <section class="card sec">
        <div class="sec-head">
-         <h2><span class="num">2</span><span data-t="quick.title">옵션</span></h2>
+         <h2><span class="snum">2</span><span data-t="quick.title">옵션</span></h2>
          <div class="seg sm styleSeg"><button data-v="quick" data-t="top.quick">🚀 빠른</button><button data-v="detail" data-t="top.detail">🛠 상세</button></div>
        </div>
        <div class="qopt"><div class="qlabel" data-t="quick.mat">재료</div><select id="q_mat"></select>
@@ -557,7 +579,7 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
      </section>
 
      <section class="card sec" id="priceCard">
-       <h2><span class="num">3</span><span data-t="price.title">견적</span></h2>
+       <h2><span class="snum">3</span><span data-t="price.title">견적</span></h2>
        <div class="qty-row"><span data-t="price.qty">수량</span>
          <div class="stepper"><button type="button" id="qtyMinus" aria-label="수량 빼기">−</button><input id="qty" type="number" min="1" step="1" value="1" aria-label="수량"><button type="button" id="qtyPlus" aria-label="수량 더하기">+</button></div></div>
        <div class="price">
@@ -567,6 +589,11 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
          </div>
          <div class="formula" id="summary"></div>
        </div>
+       <div class="fld" id="fileContactFld" data-fid="contact" style="border-top:none;padding:12px 0 0">
+         <div class="fld-head"><label for="file_contact" data-t="file.contact">연락처</label><span class="req">*</span></div>
+         <div class="hint beg-only" style="margin:-2px 0 6px" data-t="file.contactHint">주문 조회와 제작 안내에 쓰여요. 판매자만 볼 수 있어요.</div>
+         <input type="text" id="file_contact" maxlength="60" placeholder="휴대폰 번호 또는 카카오톡 ID">
+         <div class="fld-err" hidden></div></div>
        <div id="fileConsentSlot"></div>
        <button id="orderBtn" class="btn-primary btn-wide is-disabled" aria-disabled="true" data-t="price.order">주문 신청하기</button>
        <div class="btn-sub">
@@ -886,7 +913,23 @@ const TDEF = {
  "file.viewHint": "드래그로 돌려 보기 · 두 손가락으로 확대 · 두 번 탭하면 처음 시점",
  "msg.bigFile": "큰 파일이라 분석에 시간이 조금 걸려요…",
  "msg.hugeFile": "파일이 너무 커요 (최대 {mb}MB). 모델을 줄이거나 나눠서 올려 주세요.",
- "top.sfxOn": "🔊", "top.sfxOff": "🔇"
+ "top.sfxOn": "🔊", "top.sfxOff": "🔇",
+ "home.lookup": "주문 조회",
+ "lookup.title": "주문 조회",
+ "lookup.sub": "주문할 때 받은 4자리 번호와 남겨 주신 연락처를 넣어 주세요.",
+ "lookup.no": "주문번호 (4자리)", "lookup.contact": "연락처",
+ "lookup.btn": "조회하기",
+ "lookup.notFound": "주문을 찾을 수 없어요. 번호와 연락처를 다시 확인해 주세요.",
+ "lookup.needBoth": "주문번호 4자리와 연락처를 모두 넣어 주세요.",
+ "lookup.noServer": "지금은 조회할 수 없어요. 잠시 후 다시 시도해 주세요.",
+ "lookup.st.new": "주문 접수", "lookup.st.checked": "확인 완료", "lookup.st.making": "제작 중", "lookup.st.done": "완료",
+ "lookup.desc.new": "주문이 접수됐어요. 판매자가 곧 확인할 거예요.",
+ "lookup.desc.checked": "판매자가 주문을 확인했어요. 곧 제작을 시작해요.",
+ "lookup.desc.making": "지금 열심히 만들고 있어요. 🖨",
+ "lookup.desc.done": "제작이 끝났어요! 스마트스토어 배송 안내를 확인해 주세요. 🎉",
+ "lookup.updated": "마지막 변경",
+ "done.lookupHint": "🔎 진행 상황은 시작 화면의 <b>주문 조회</b>에서 번호와 연락처로 확인할 수 있어요.",
+ "file.needContact": "연락처를 적어 주세요."
 };
 let TOV = {};                                   // 관리자가 바꾼 문구
 let EDIT = false;                               // 화면에서 직접 편집하는 중인지 (관리자만)
@@ -1257,12 +1300,12 @@ function renderReqMode(mode){
   const panel = $(`mode-${mode}`);
   panel.innerHTML = `<div class="narrow">
     <section class="card sec">
-      <div class="sec-head"><h2><span class="num">1</span>${M.heading}</h2>${styleSegHtml()}</div>
+      <div class="sec-head"><h2><span class="snum">1</span>${M.heading}</h2>${styleSegHtml()}</div>
       <div class="guide beg-only"><b>${t("req.stepsTitle")}</b><br>${M.steps.map((x, i) => `${i + 1}. ${x}`).join("<br>")}</div>
       <p class="note quick-only" style="margin:0 0 8px">${t("req.quickGuide")}</p>
       ${M.fields.map(field).join("")}</section>
     <section class="card sec">
-      <h2><span class="num">2</span>${t("req.priceTitle")}</h2>
+      <h2><span class="snum">2</span>${t("req.priceTitle")}</h2>
       <div class="price" style="margin-top:0">
         <div class="total req-total" id="${P("fee")}"></div>
         <div class="formula">${t("req.feeRule")}<br>${t("req.printLine")}</div></div>
@@ -1445,6 +1488,37 @@ async function makeTestVideo(){
   return new File(chunks, name, {type: "video/webm"});
 }
 
+/* ---- 주문 조회: 번호 + 연락처로 만든 열쇠(해시)로만 찾을 수 있음 ---- */
+const normContact = s => String(s || "").trim().toLowerCase().replace(/[\s\-().]/g, "");
+async function lookupKey(no, contact){
+  const data = new TextEncoder().encode(`formdot|${no}|${normContact(contact)}`);
+  const h = await crypto.subtle.digest("SHA-256", data);
+  return [...new Uint8Array(h)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+const LK_STEPS = ["new", "checked", "making", "done"];
+async function doLookup(){
+  const no = $("lkNo").value.trim(), ct = $("lkContact").value.trim(), err = $("lkErr");
+  err.textContent = ""; $("lkResult").innerHTML = "";
+  if (!/^\d{4}$/.test(no) || normContact(ct).length < 4){ err.textContent = plain(t("lookup.needBoth")); sfx("error"); return; }
+  if (!fbReady()){ err.textContent = plain(t("lookup.noServer")); sfx("error"); return; }
+  const btn = $("lkBtn"), label = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
+  try{
+    const {db, D} = await fb();
+    const v = (await D.get(D.ref(db, "lookup/" + await lookupKey(no, ct)))).val();
+    if (!v){ err.textContent = plain(t("lookup.notFound")); sfx("error"); return; }
+    const st = LK_STEPS.includes(v.status) ? v.status : "new", idx = LK_STEPS.indexOf(st);
+    const when = v.updatedAt || v.createdAt;
+    $("lkResult").innerHTML = `<div class="card sec lk-card">
+      <div class="lk-head"><span class="lk-no">${escapeHtml(no)}</span><span class="oc-type">${escapeHtml(v.type || "")}</span></div>
+      ${v.name ? `<div class="lk-name">${escapeHtml(v.name)}</div>` : ""}
+      <ol class="lk-steps">${LK_STEPS.map((s, i) => `<li class="${i < idx ? "past" : i === idx ? "now" : ""}"><i></i><span>${t("lookup.st." + s)}</span></li>`).join("")}</ol>
+      <div class="lk-desc">${t("lookup.desc." + st)}</div>
+      <div class="lk-meta">${v.total ? escapeHtml(v.total) : ""}${when ? ` · ${t("lookup.updated")} ${new Date(when).toLocaleString("ko-KR", {month: "long", day: "numeric", hour: "2-digit", minute: "2-digit"})}` : ""}</div></div>`;
+    animIn($("lkResult")); sfx("success");
+  }catch(e){ console.error(e); err.textContent = plain(t("lookup.noServer")); sfx("error"); }
+  finally{ btn.disabled = false; btn.innerHTML = label; }
+}
+
 /* ---- 개인정보 수집·이용 동의 ---- */
 const consentHtml = id => `<div class="consent" id="${id}">
   <label class="chk-row"><input type="checkbox" class="consent-cb"><span>${t("consent.label")}</span></label>
@@ -1620,7 +1694,6 @@ function bindStudentBox(){
 function refreshPrices(){
   updatePrice();
   if ($("sketch_fee")) { updateReqFee("sketch"); updateReqFee("idea"); }
-  if ($("fileConsent")) $("fileConsent").hidden = !stuOn();
   const chip = $("tbStu");
   chip.hidden = !student.on;
   chip.className = "tb-chip stu" + (student.ok ? "" : " need");
@@ -1636,7 +1709,7 @@ function route(screen){
   setBodyClass();
   const inForm = screen === "form" && prefs.level && prefs.mode && prefs.style;
   $("wizard").hidden = !!inForm; $("formArea").hidden = !inForm;
-  if (inForm) renderForm(); else renderScreen(["home","way","pick"].includes(screen) ? screen : "home");
+  if (inForm) renderForm(); else renderScreen(["home","way","pick","lookup"].includes(screen) ? screen : "home");
   window.scrollTo(0, 0);
   animIn(inForm ? $("formArea") : $("wizard"));
 }
@@ -1681,7 +1754,8 @@ function renderScreen(step){
       <div class="brand adminTrigger" id="homeBrand">${t("brand.name")}</div>
       <div class="slogan">${t("home.slogan")}</div>
       <p class="promo">${t("home.promo")}</p>
-      <button class="btn-primary start-btn" id="homeStart">${t("home.start")}</button>
+      <div class="home-btns"><button class="btn-primary start-btn" id="homeStart">${t("home.start")}</button>
+        <button class="start-btn ghost" id="homeLookup">${t("home.lookup")}</button></div>
       <h2 class="pf-title">${t("home.pfTitle")}</h2>
       <div class="pf-grid">${renderPortfolio()}</div>
       <h2 class="pf-title">${t("faq.title")}</h2>
@@ -1689,7 +1763,27 @@ function renderScreen(step){
         <span class="acc-t">${t("faq.q" + i)}</span><span class="acc-arrow">›</span></button>
         <div class="acc-body" hidden>${t("faq.a" + i)}</div></div>`).join("")}</div></div>`;
     $("homeStart").onclick = () => nav("way");
+    $("homeLookup").onclick = () => nav("lookup");
     onLongPress($("homeBrand"), 3000, () => openPin());
+    return;
+  }
+  if (step === "lookup"){
+    W.innerHTML = `<div class="wz"><div class="wz-top"><button class="link-btn" id="wzBack">${t("nav.back")}</button></div>
+      <h1>${t("lookup.title")}</h1><p class="sub">${t("lookup.sub")}</p>
+      <div class="card sec">
+        <div class="fld" style="border-top:none;padding-top:0"><div class="fld-head"><label for="lkNo">${t("lookup.no")}</label></div>
+          <input type="text" id="lkNo" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off"></div>
+        <div class="fld"><div class="fld-head"><label for="lkContact">${t("lookup.contact")}</label></div>
+          <input type="text" id="lkContact" maxlength="60" placeholder="휴대폰 번호 또는 카카오톡 ID"></div>
+        <div class="err" id="lkErr" style="margin-top:6px"></div>
+        <button class="btn-primary btn-wide" id="lkBtn">${t("lookup.btn")}</button>
+      </div>
+      <div id="lkResult"></div></div>`;
+    $("lkNo").addEventListener("input", () => { $("lkNo").value = $("lkNo").value.replace(/\D/g, "").slice(0, 4); });
+    const go = () => doLookup();
+    $("lkBtn").onclick = go;
+    ["lkNo","lkContact"].forEach(id => $(id).addEventListener("keydown", e => { if (e.key === "Enter") go(); }));
+    $("wzBack").onclick = () => history.back();
     return;
   }
   if (step === "way"){
@@ -2326,20 +2420,25 @@ function orderData(){
          [L("file.rowQQ"), quickText("quality")], [L("file.rowQP"), quickText("support")]]
       : settingsList(false);
   const settings = [[L("file.rowStyle"), styleText()], ...optRows, [L("file.rowQty"), qty + "개"],
-    ...(stuOn() ? [[L("stu.rowLabel"), L("stu.rowValue")], [L("consent.row"), L("consent.rowVal")]] : [])];
+    ...(stuOn() ? [[L("stu.rowLabel"), L("stu.rowValue")]] : [])];
   return {type: "file", typeLabel: noEmoji(t("mode.file")), test: !!current.test, student: stuOn(), printMin: Math.round(m), weightG: +g.toFixed(1),
           name: (current.test ? "[테스트] " : "") + current.name,
           total: won(final) + (stuOn() ? ` (${L("pick.stuTag")})` : ""),
           sections: [[L("file.secInfo"), [[L("file.rowName"), current.name], [L("file.rowWeight"), g.toFixed(1) + "g"],
-                       [L("file.rowSize"), size]]], [L("file.secSet"), settings]]};
+                       [L("file.rowSize"), size]]], [L("file.secSet"), settings],
+                     [L("req.secWho"), [["연락처", $("file_contact").value.trim()], [L("consent.row"), L("consent.rowVal")]]]]};
 }
 const rows = arr => arr.map(([k,v]) => `<tr><th>${escapeHtml(k)}</th><td class="pre">${escapeHtml(v)}</td></tr>`).join("");
 let lastOrder = null, pending = null;
 
 $("orderBtn").addEventListener("click", () => {
   if (!current || current.tooBig){ if (!current) toast(plain(t("msg.needFile"))); sfx("error"); return; }
+  const cf = $("fileContactFld"), cv = $("file_contact").value.trim();
+  const cmsg = !cv ? t("file.needContact") : cv.replace(/[^0-9a-zA-Z]/g, "").length < 4 ? t("req.badContact") : "";
+  setFieldErr(cf, cmsg);
+  if (cmsg){ cf.scrollIntoView({behavior: "smooth", block: "center"}); sfx("error"); return; }
   if (!checkConsent("fileConsent")) return;
-  const d = orderData(); d.consent = stuOn();
+  const d = orderData(); d.consent = true; d.contact = cv;
   openConfirm(d, [{file: current.file, kind: "model"}, ...studentFiles()]);
 });
 function openConfirm(d, files){
@@ -2398,7 +2497,7 @@ function showDone(d){
   $("noLabel").textContent = plain(t(isReq ? "done.noReq" : "done.noOrder"));
   $("orderCopyBtn").textContent = plain(t(isReq ? "done.copyReq" : "done.copyOrder"));
   $("orderNo").textContent = d.no;
-  $("doneGuide").innerHTML = t("done.guide", {no: escapeHtml(d.no)});
+  $("doneGuide").innerHTML = t("done.guide", {no: escapeHtml(d.no)}) + (d.contact ? `<div class="lk-hint">${t("done.lookupHint")}</div>` : "");
   $("orderBody").innerHTML = d.sections.filter(([, r]) => r.length)
     .map(([tt, r]) => `<div class="sec-title">${escapeHtml(tt)}</div><table class="info">${rows(r)}</table>`).join("");
   $("orderTotal").textContent = d.total;
@@ -2452,7 +2551,6 @@ function initUI(){
   renderReqMode("sketch");
   renderReqMode("idea");
   $("fileConsentSlot").innerHTML = consentHtml("fileConsent");
-  $("fileConsent").hidden = true;
   bindStoreLinks();
   initPills();
   renderSfxBtn();
@@ -2536,11 +2634,18 @@ async function submitOrder(d, files, progress){
     idx += n;
   }
   progress("정보 저장 중…");
+  const lk = d.contact ? await lookupKey(no, d.contact) : "";
   await D.set(D.ref(db, "orders/" + no), {
+    lk,
     no, type: d.type, name: d.name, total: d.total, contact: d.contact || "", test: !!d.test, student: !!d.student, designFee: d.designFee || 0, printMin: d.printMin || 0, weightG: d.weightG || 0, consent: d.consent ? "개인정보 수집·이용 동의" : "",
     sections: d.sections.map(([t, r]) => ({t, rows: r.map(([k, v]) => ({k, v}))})),
     attachments, status: "new", createdAt: D.serverTimestamp()
   });
+  // 손님 주문 조회용 (번호+연락처 열쇠로만 찾을 수 있음). 보안규칙에 lookup 이 없으면 건너뜀
+  if (lk) try{
+    await D.set(D.ref(db, "lookup/" + lk), {status: "new", type: d.typeLabel || "", name: d.name, total: d.total,
+      createdAt: D.serverTimestamp(), updatedAt: D.serverTimestamp()});
+  }catch(e){ console.warn("주문 조회 정보 저장 실패 (보안규칙에 lookup 추가 필요)", e); }
   return no;
 }
 
@@ -2773,7 +2878,13 @@ $("adminList").addEventListener("input", e => { const g = e.target.closest(".cal
 $("adminList").addEventListener("change", async e => {
   const g = e.target.closest(".calc-grid"); if (g) return calcCompute(g.dataset.no);
   if (e.target.classList.contains("status-sel")){
-    try{ const {db, D} = await fb(); await D.set(D.ref(db, `orders/${e.target.dataset.no}/status`), e.target.value); toast("상태를 바꿨어요: " + stLabel(e.target.value)); }
+    try{
+      const {db, D} = await fb(), no = e.target.dataset.no, o = ordersData[no], v = e.target.value;
+      const up = {[`orders/${no}/status`]: v};
+      if (o && o.lk){ up[`lookup/${o.lk}/status`] = v; up[`lookup/${o.lk}/updatedAt`] = D.serverTimestamp(); }
+      await D.update(D.ref(db), up);
+      toast("상태를 바꿨어요: " + stLabel(v) + (o && o.lk ? " · 손님 조회에도 반영돼요" : ""));
+    }
     catch(err){ alert("실패했어요: " + (err.code || err.message)); }
   }
 });
@@ -2824,7 +2935,7 @@ $("adminList").addEventListener("click", async e => {
       toast("인증 영상을 삭제했어요");
     } else if (b.dataset.act === "del"){
       if (!confirm(`${no} (${o.name})을(를) 삭제할까요?\n첨부 파일도 함께 지워지고 되돌릴 수 없어요.`)) return;
-      await D.update(D.ref(db), {[`orders/${no}`]: null, [`files/${no}`]: null, [`orderNos/${no}`]: null});
+      await D.update(D.ref(db), {[`orders/${no}`]: null, [`files/${no}`]: null, [`orderNos/${no}`]: null, ...(o.lk ? {[`lookup/${o.lk}`]: null} : {})});
     }
   }catch(err){
     console.error(err); alert("작업에 실패했어요: " + (err.code || err.message));
@@ -2961,7 +3072,7 @@ $("setSave").addEventListener("click", async () => {
 const TX_GROUPS = [["brand","브랜드 이름"],["home","시작 화면"],["nav","이동 버튼"],["way","진행 방식 화면"],["stu","학생 할인"],
   ["pick","의뢰 선택 화면"],["mode","의뢰 종류 이름"],["top","주문 화면 위쪽"],["file","3D 파일 화면"],["quick","빠른 모드 옵션"],
   ["price","견적 카드"],["opt","출력 옵션 (상세 모드)"],["req","스케치·아이디어 화면"],["confirm","확인창"],["done","완료 화면"],
-  ["copy","복사 창"],["msg","안내 · 오류 메시지"],["consent","개인정보 동의"],["faq","자주 묻는 질문"]];
+  ["copy","복사 창"],["msg","안내 · 오류 메시지"],["consent","개인정보 동의"],["faq","자주 묻는 질문"],["lookup","주문 조회"]];
 function renderTexts(){
   const groups = {};
   for (const k of Object.keys(TDEF)) (groups[k.split(".")[0]] ||= []).push(k);
