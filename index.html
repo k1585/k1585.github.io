@@ -548,6 +548,10 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
 .brand-sm .logo-word{width:92px;height:auto;display:block;color:#fff}
 .slogan{margin-top:18px}
 @media (max-width:560px){.logo-lockup .logo-sym{width:96px}.logo-lockup .logo-word{width:210px}.brand-sm .logo-word{display:none}}
+
+/* ---- 집 모양 (처음으로) 버튼 ---- */
+.home-wide{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.home-wide svg{display:block}
 </style>
 </head>
 <body>
@@ -566,7 +570,7 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
      <div class="tb-right">
        <div class="seg sm" id="tbLevel"><button data-v="beg" data-t="top.beg">🙂 초보자</button><button data-v="pro" data-t="top.pro">⚡ 숙련자</button></div>
        <button class="link-btn sfx-btn" id="tbSfx" aria-label="효과음 끄기">🔊</button>
-       <button class="link-btn" id="tbRestart" data-t="top.restart">처음으로</button>
+       <button class="back-btn sm" id="tbRestart" aria-label="처음으로 (홈)" title="처음으로"></button>
      </div>
    </div>
 
@@ -668,7 +672,7 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
     </div>
     <div class="btn-row" style="margin-top:8px">
       <button id="orderCopyBtn"></button>
-      <button id="backBtn" data-t="done.back">처음으로</button>
+      <button id="backBtn" class="home-wide" aria-label="처음으로 (홈)"><span id="backBtnIc"></span><span data-t="done.back">홈으로</span></button>
     </div>
   </div>
  </div>
@@ -818,7 +822,7 @@ let STUDENT_RATE = 0.15;      // 학생 할인 15%
 const STUDENT_MIN_SEC = 5;      // 학생 인증 영상 최소 길이 (초)
 /* ======== 로고 (심볼 + 워드마크, 벡터) ======== */
 const LOGO_SYMBOL = '<svg class="logo-sym" xmlns="http://www.w3.org/2000/svg" viewBox="372 318 516 528" role="img" aria-label="FORMDOT 심볼"><defs><linearGradient id="fdTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1A8CFF"/><stop offset="1" stop-color="#0A4DFF"/></linearGradient></defs><polygon points="628,340 820,437 628,535 434,437" fill="url(#fdTop)" stroke="url(#fdTop)" stroke-width="18" stroke-linejoin="round"/><g transform="matrix(1,0.5,0,1,382,467)" fill="#F7F8FA"><rect width="60" height="250" rx="16"/><rect width="230" height="62" rx="14"/><rect x="40" y="114" width="190" height="62" rx="12"/></g><g transform="matrix(1,-0.5,0,1,640,582)"><path fill="#0B6BFF" fill-rule="evenodd" d="M14,0H221Q235,0 235,14V178Q235,250 163,250H14Q0,250 0,236V14Q0,0 14,0ZM63,68H164Q170,68 170,74V148Q170,188 130,188H63Q57,188 57,182V74Q57,68 63,68Z"/></g></svg>';
-const LOGO_WORD = '<svg class="logo-word" xmlns="http://www.w3.org/2000/svg" viewBox="-7 -7 914 114" role="img" aria-label="FORMDOT"><g fill="none" stroke="currentColor" stroke-width="25" stroke-linejoin="round"><path d="M10,92V10H88M10,50H76"/><rect x="120" y="10" width="102" height="80" rx="40"/><path d="M260,92V10H314Q347,10 347,35Q347,60 314,60H260M308,60L348,92"/><path d="M385,92V10L440,62L495,10V92"/><path d="M535,10H585Q630,10 630,50Q630,90 585,90H535Z"/><rect x="670" y="10" width="102" height="80" rx="40"/><path d="M800,10H900M850,10V92"/></g><path d="M700,92Q670,90 670,58V42Q670,10 702,10H756" fill="none" stroke="#1A6DFF" stroke-width="25"/></svg>';
+const LOGO_WORD = '<svg class="logo-word" xmlns="http://www.w3.org/2000/svg" viewBox="-7 -7 914 114" role="img" aria-label="FORMDOT"><g fill="none" stroke="currentColor" stroke-width="25" stroke-linejoin="round"><path d="M10,92V10H88M10,50H76"/><rect x="120" y="10" width="102" height="80" rx="40"/><path d="M260,92V10H314Q347,10 347,35Q347,60 314,60H260M308,60L348,92"/><path d="M385,92V10L440,62L495,10V92"/><path d="M535,10H585Q630,10 630,50Q630,90 585,90H535Z"/><path d="M736,10H708A40,40 0 0 0 708,90H736A40,40 0 0 0 736,10Z" pathLength="100" stroke-dasharray="0 46 50 4" stroke-linejoin="miter"/><path d="M800,10H900M850,10V92"/></g><path d="M736,10H708A40,40 0 0 0 708,90H736A40,40 0 0 0 736,10Z" pathLength="100" fill="none" stroke="#1A6DFF" stroke-width="25" stroke-dasharray="42 58"/></svg>';
 /* ======== 카카오톡 오픈채팅 (손님 문의) ======== */
 const KAKAO_CHAT_URL = "https://open.kakao.com/o/s85siVVi";        // 오픈채팅 (안내는 주로 연락처로)
 const KAKAO_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.85 1.86 5.35 4.67 6.77-.2.74-.74 2.7-.85 3.12-.13.52.19.51.4.37.17-.11 2.62-1.78 3.68-2.5.69.1 1.39.15 2.1.15 5.52 0 10-3.58 10-8S17.52 3 12 3z"/></svg>';
@@ -2614,6 +2618,9 @@ $("doneBack").innerHTML = BACK_ICON;
 $("doneBack").addEventListener("click", () => { if (lastOrder) prefs.mode = lastOrder.type; route("form"); });
 $("backBtn").addEventListener("click", () => nav("home"));
 $("tbBack").innerHTML = BACK_ICON;
+const HOME_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 11.2 12 4.8l8 6.4V19a1 1 0 0 1-1 1h-4.6v-5.2H9.6V20H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/></svg>';
+$("tbRestart").innerHTML = HOME_ICON;
+$("backBtnIc").innerHTML = HOME_ICON;
 $("tbBack").addEventListener("click", () => history.length > 1 ? history.back() : nav("pick"));
 function showView(id){
   for (const v of ["quoteView","orderView","adminView"]) $(v).hidden = v !== id;
