@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://k1585.github.io/">
 <meta property="og:site_name" content="FORMDOT.">
-<meta property="og:title" content="FORMDOT. · 아이디어를 형태로.">
+<meta property="og:title" content="FORMDOT. · 형태의 시작, 상상을 현실로.">
 <meta property="og:description" content="3D 모델링부터 프린팅까지, 당신의 아이디어를 현실로 구현합니다. 파일만 올리면 바로 견적!">
 <meta property="og:image" content="https://k1585.github.io/og.png">
 <meta property="og:image:width" content="1200">
@@ -537,6 +537,17 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
 .btn-kakao.link{background:transparent;color:#FEE500;padding:6px 8px;font-size:14px;font-weight:600}
 .home-kakao{margin-top:10px}
 .lk-kakao{margin-top:12px;display:flex}
+
+/* ---- 로고 (심볼 + 워드마크) ---- */
+.logo-lockup{display:inline-flex;flex-direction:column;align-items:center;gap:18px}
+.logo-lockup .logo-sym{width:118px;height:auto;display:block}
+.logo-lockup .logo-word{width:250px;height:auto;display:block;color:#fff}
+.brand.logo-lockup{font-size:0;letter-spacing:0}
+.brand-sm{display:inline-flex;align-items:center;gap:8px}
+.brand-sm .logo-sym{width:28px;height:auto;display:block}
+.brand-sm .logo-word{width:92px;height:auto;display:block;color:#fff}
+.slogan{margin-top:18px}
+@media (max-width:560px){.logo-lockup .logo-sym{width:96px}.logo-lockup .logo-word{width:210px}.brand-sm .logo-word{display:none}}
 </style>
 </head>
 <body>
@@ -549,7 +560,7 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
   <div id="formArea" hidden>
    <div class="topbar">
      <button class="back-btn sm" id="tbBack" aria-label="뒤로"></button>
-     <span class="brand-sm adminTrigger" data-t="brand.short">FORMDOT<span class="dot">.</span></span>
+     <span class="brand-sm adminTrigger" id="tbBrand" aria-label="FORMDOT"></span>
      <button class="tb-chip" id="tbMode"></button>
      <button class="tb-chip stu" id="tbStu" hidden></button>
      <div class="tb-right">
@@ -614,7 +625,7 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
        <div class="fld" id="fileContactFld" data-fid="contact" style="border-top:none;padding:12px 0 0">
          <div class="fld-head"><label for="file_contact" data-t="file.contact">연락처</label><span class="req">*</span></div>
          <div class="hint beg-only" style="margin:-2px 0 6px" data-t="file.contactHint">주문 조회와 제작 안내에 쓰여요. 판매자만 볼 수 있어요.</div>
-         <input type="text" id="file_contact" maxlength="60" placeholder="휴대폰 번호 또는 카카오톡 ID">
+         <input type="tel" id="file_contact" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="휴대폰 번호 (예: 010-1234-5678)">
          <div class="fld-err" hidden></div></div>
        <div id="fileConsentSlot"></div>
        <button id="orderBtn" class="btn-primary btn-wide is-disabled" aria-disabled="true" data-t="price.order">주문 신청하기</button>
@@ -655,7 +666,6 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
     <div class="btn-row">
       <a class="btn-store storeLink" href="#" target="_blank" rel="noopener" draggable="false" data-t="done.store">스마트스토어 바로가기</a>
     </div>
-    <div id="doneKakao" style="margin-top:8px"></div>
     <div class="btn-row" style="margin-top:8px">
       <button id="orderCopyBtn"></button>
       <button id="backBtn" data-t="done.back">처음으로</button>
@@ -806,9 +816,11 @@ let DESIGN_STEP_MIN = 30;     // 초과하면 이 시간(분)마다
 let DESIGN_STEP_FEE = 1000;   // 이 금액씩 추가 (원)
 let STUDENT_RATE = 0.15;      // 학생 할인 15%
 const STUDENT_MIN_SEC = 5;      // 학생 인증 영상 최소 길이 (초)
-/* ======== 카카오톡 채널 (손님 문의·안내) ======== */
-const KAKAO_CHANNEL_URL = "https://pf.kakao.com/_xcxoxnxeX";        // 채널 홈 (채널 추가)
-const KAKAO_CHAT_URL = "https://pf.kakao.com/_xcxoxnxeX/chat";      // 1:1 채팅
+/* ======== 로고 (심볼 + 워드마크, 벡터) ======== */
+const LOGO_SYMBOL = '<svg class="logo-sym" xmlns="http://www.w3.org/2000/svg" viewBox="372 318 516 528" role="img" aria-label="FORMDOT 심볼"><defs><linearGradient id="fdTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1A8CFF"/><stop offset="1" stop-color="#0A4DFF"/></linearGradient></defs><polygon points="628,340 820,437 628,535 434,437" fill="url(#fdTop)" stroke="url(#fdTop)" stroke-width="18" stroke-linejoin="round"/><g transform="matrix(1,0.5,0,1,382,467)" fill="#F7F8FA"><rect width="60" height="250" rx="16"/><rect width="230" height="62" rx="14"/><rect x="40" y="114" width="190" height="62" rx="12"/></g><g transform="matrix(1,-0.5,0,1,640,582)"><path fill="#0B6BFF" fill-rule="evenodd" d="M14,0H221Q235,0 235,14V178Q235,250 163,250H14Q0,250 0,236V14Q0,0 14,0ZM63,68H164Q170,68 170,74V148Q170,188 130,188H63Q57,188 57,182V74Q57,68 63,68Z"/></g></svg>';
+const LOGO_WORD = '<svg class="logo-word" xmlns="http://www.w3.org/2000/svg" viewBox="-7 -7 914 114" role="img" aria-label="FORMDOT"><g fill="none" stroke="currentColor" stroke-width="25" stroke-linejoin="round"><path d="M10,92V10H88M10,50H76"/><rect x="120" y="10" width="102" height="80" rx="40"/><path d="M260,92V10H314Q347,10 347,35Q347,60 314,60H260M308,60L348,92"/><path d="M385,92V10L440,62L495,10V92"/><path d="M535,10H585Q630,10 630,50Q630,90 585,90H535Z"/><rect x="670" y="10" width="102" height="80" rx="40"/><path d="M800,10H900M850,10V92"/></g><path d="M700,92Q670,90 670,58V42Q670,10 702,10H756" fill="none" stroke="#1A6DFF" stroke-width="25"/></svg>';
+/* ======== 카카오톡 오픈채팅 (손님 문의) ======== */
+const KAKAO_CHAT_URL = "https://open.kakao.com/o/s85siVVi";        // 오픈채팅 (안내는 주로 연락처로)
 const KAKAO_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.85 1.86 5.35 4.67 6.77-.2.74-.74 2.7-.85 3.12-.13.52.19.51.4.37.17-.11 2.62-1.78 3.68-2.5.69.1 1.39.15 2.1.15 5.52 0 10-3.58 10-8S17.52 3 12 3z"/></svg>';
 const kakaoBtn = (url, key, cls = "") => `<a class="btn-kakao ${cls}" href="${url}" target="_blank" rel="noopener">${KAKAO_ICON}<span>${t(key)}</span></a>`;
 /* ======== 주문 알림 (ntfy) ========
@@ -822,7 +834,7 @@ const PRINT_PRICE = {perMin: 9.5, base: 2300, margin: 1.4};
 /* ================= 문구 (관리자 > 사이트 문구에서 모두 바꿀 수 있어요) ================= */
 const TDEF = {
  "brand.name": "FORMDOT<span class=\"dot\">.</span>",
- "home.slogan": "아이디어를 형태로.",
+ "home.slogan": "형태의 시작, 상상을 현실로.",
  "home.promo": "3D 모델링부터 프린팅까지, 당신의 아이디어를 현실로 구현합니다.",
  "home.start": "시작하기",
  "home.pfTitle": "포트폴리오",
@@ -959,11 +971,11 @@ const TDEF = {
  "lookup.updated": "마지막 변경",
  "done.lookupHint": "🔎 진행 상황은 시작 화면의 <b>주문 조회</b>에서 번호와 연락처로 확인할 수 있어요.",
  "file.needContact": "연락처를 적어 주세요.",
- "kakao.home": "카카오톡으로 문의하기",
- "kakao.req": "카톡으로 먼저 상담하기",
+ "kakao.home": "카카오톡 오픈채팅 문의",
+ "kakao.req": "오픈채팅으로 상담하기",
  "kakao.done": "카카오톡 채널 추가하고 안내 받기",
  "kakao.doneHint": "채널을 추가해 두시면 견적·제작 안내를 카톡으로 받을 수 있어요.",
- "kakao.lookup": "카톡으로 문의하기",
+ "kakao.lookup": "오픈채팅으로 문의하기",
  "purpose.strongHint": "💪 힘을 받는 물건이라 튼튼함을 <b>튼튼하게</b>로 맞췄어요. (옵션에서 바꿀 수 있어요)",
  "purpose.strongHintDetail": "💪 힘을 받는 물건이면 <b>벽 개수 3~4겹</b>, <b>내부 채움 30% 이상</b>을 추천해요.",
  "purpose.decoHint": "✨ 장식용이면 품질을 <b>곱게</b>로 하면 표면이 더 매끈해요."
@@ -1128,7 +1140,7 @@ const F = {
   qty:   {id:"qty", label:"수량", type:"number", def:1, min:1, max:999, unit:"개", help:"같은 물건을 몇 개 만들지예요."},
   due:   {id:"due", label:"희망 완료일", type:"date", help:"필요한 날짜가 있으면 알려 주세요. 설계와 출력에 보통 며칠이 걸려요. 급하면 설명에도 적어 주세요."},
   name:  {id:"cname", label:"이름", type:"text", ph:"예) 홍길동", help:"연락드릴 때 부를 이름이에요."},
-  contact:{id:"contact", label:"연락처", type:"text", req:true, ph:"휴대폰 번호 또는 카카오톡 ID",
+  contact:{id:"contact", label:"연락처", type:"text", req:true, ph:"휴대폰 번호 (예: 010-1234-5678)",
           help:"설계 내용과 견적을 안내드릴 연락처예요. 판매자만 볼 수 있어요."}
 };
 const REQ_MODES = {
@@ -1338,7 +1350,9 @@ function renderReqMode(mode){
   const field = f => {
     const id = P(f.id);
     let ctl;
-    if (f.type === "text") ctl = `<input type="text" id="${id}" placeholder="${escapeHtml(f.ph || "")}" maxlength="200">`;
+    if (f.type === "text") ctl = f.id === "contact"
+      ? `<input type="tel" id="${id}" inputmode="tel" autocomplete="tel" placeholder="${escapeHtml(f.ph || "")}" maxlength="20">`
+      : `<input type="text" id="${id}" placeholder="${escapeHtml(f.ph || "")}" maxlength="200">`;
     else if (f.type === "textarea") ctl = `<textarea id="${id}" placeholder="${escapeHtml(f.ph || "")}" maxlength="3000"></textarea>`;
     else if (f.type === "date") ctl = `<input type="date" id="${id}">`;
     else if (f.type === "number") ctl = `<input type="number" id="${id}" min="${f.min}" max="${f.max}" value="${f.def}" style="width:120px">`;
@@ -1824,7 +1838,7 @@ function renderScreen(step){
   const W = $("wizard");
   if (step === "home"){
     W.innerHTML = `<div class="home">
-      <div class="brand adminTrigger" id="homeBrand">${t("brand.name")}</div>
+      <div class="brand adminTrigger logo-lockup" id="homeBrand" aria-label="FORMDOT">${LOGO_SYMBOL}${LOGO_WORD}</div>
       <div class="slogan">${t("home.slogan")}</div>
       <p class="promo">${t("home.promo")}</p>
       <div class="home-btns"><button class="btn-primary start-btn" id="homeStart">${t("home.start")}</button>
@@ -1848,7 +1862,7 @@ function renderScreen(step){
         <div class="fld" style="border-top:none;padding-top:0"><div class="fld-head"><label for="lkNo">${t("lookup.no")}</label></div>
           <input type="text" id="lkNo" inputmode="numeric" maxlength="4" placeholder="0000" autocomplete="off"></div>
         <div class="fld"><div class="fld-head"><label for="lkContact">${t("lookup.contact")}</label></div>
-          <input type="text" id="lkContact" maxlength="60" placeholder="휴대폰 번호 또는 카카오톡 ID"></div>
+          <input type="tel" id="lkContact" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="휴대폰 번호 (예: 010-1234-5678)"></div>
         <div class="err" id="lkErr" style="margin-top:6px"></div>
         <button class="btn-primary btn-wide" id="lkBtn">${t("lookup.btn")}</button>
       </div>
@@ -2572,7 +2586,6 @@ function showDone(d){
   $("orderCopyBtn").textContent = plain(t(isReq ? "done.copyReq" : "done.copyOrder"));
   $("orderNo").textContent = d.no;
   $("doneGuide").innerHTML = t("done.guide", {no: escapeHtml(d.no)}) + (d.contact ? `<div class="lk-hint">${t("done.lookupHint")}</div>` : "");
-  $("doneKakao").innerHTML = kakaoBtn(KAKAO_CHANNEL_URL, "kakao.done", "wide") + `<div class="note" style="text-align:center">${t("kakao.doneHint")}</div>`;
   $("orderBody").innerHTML = d.sections.filter(([, r]) => r.length)
     .map(([tt, r]) => `<div class="sec-title">${escapeHtml(tt)}</div><table class="info">${rows(r)}</table>`).join("");
   $("orderTotal").textContent = d.total;
@@ -2624,6 +2637,7 @@ function initUI(){
   applyStaticTexts();
   applyDefTexts();
   renderOpts();
+  $("tbBrand").innerHTML = LOGO_SYMBOL + LOGO_WORD;
   $("q_purpose").innerHTML = PURPOSE_LIST.map(([v, tx]) => `<option value="${v}"${v === "living" ? " selected" : ""}>${plain(ov("purpose." + v, tx, true))}</option>`).join("");
   $("q_mat").innerHTML = $("mat").innerHTML;
   $("q_color").innerHTML = $("color").innerHTML;
