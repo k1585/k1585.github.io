@@ -210,12 +210,41 @@ body{margin:0;background:var(--fd-bg);color:var(--fd-text);font-family:var(--fd-
 @media (max-width:560px){.hint-cards{grid-template-columns:1fr 1fr 1fr;gap:6px}.hint-cards div{padding:12px 10px}.hint-cards b{font-size:17px}.hint-cards small{font-size:11.5px}.hello{padding-top:24px}}
 </style>
 <style>
-/* 운영용 추가 스타일 — 시안 C 화면 그대로, 완료 화면의 주문번호·조회 코드 칸만 더함 */
+/* 운영용: 시안 C 구조 그대로, 색만 검정 + 코발트 블루(브랜드 #2962FF) */
+:root{--fd-bg:#0d0e10;--fd-surface:#17181c;--fd-surface2:#131417;--fd-line:#2a2c33;--fd-text:#f4f5f7;--fd-muted:#9aa0ab;
+  --fd-accent:#2962ff;--fd-accent-text:#7fa0ff;--fd-accent-soft:rgba(41,98,255,.16);--fd-warn:#f5b941;--fd-warn-soft:rgba(245,185,65,.13);--fd-ok:#3fcf86;--fd-bad:#ff7b7b;color-scheme:dark}
+body{background:var(--fd-bg)!important;color:var(--fd-text)!important}
+.fd-logo,.fd-logo-sym,.fd-logo-word{color:#f7f8fa!important}
+.top .r a{color:var(--fd-muted)!important}.top .r a:hover{background:var(--fd-surface)!important;color:var(--fd-text)!important}
+.top .r a.kk{display:inline-flex;align-items:center;gap:5px;background:#fee500!important;color:#191919!important}.top .r a.kk .fd-ic{width:16px;height:16px}
+.hello .bubble,.choice,.hint-cards div,.pf,.faq details,.recap,.icon-btn,.q .fd-opt,.q .fd-drop,.fd-adv,.fd-status,.mine{background:var(--fd-surface)!important;border-color:var(--fd-line)!important;color:var(--fd-text)!important}
+.hello .bubble{box-shadow:none!important}
+.choice:hover{border-color:#3d4a6b!important}.choice.on,.q .fd-opt.on,.fd-mat.on{background:var(--fd-accent-soft)!important;border-color:var(--fd-accent)!important}
+.choice .em{background:var(--fd-accent-soft)!important;color:var(--fd-accent-text)!important}
+.hint-cards b{color:var(--fd-accent-text)!important}
+.q-top{background:rgba(13,14,16,.94)!important}.q-top .bar{background:var(--fd-line)!important}
+.foot{background:linear-gradient(transparent,var(--fd-bg) 30%)!important}
+.view{background:radial-gradient(circle at 50% 40%,#22242a,#101113 75%)!important;border-color:var(--fd-line)!important}
+.fd-quote{background:var(--fd-surface)!important;border-color:var(--fd-line)!important}
+.fd-quote.auto{background:var(--fd-accent-soft)!important;border-color:rgba(41,98,255,.5)!important}
+.fd-quote.review{background:var(--fd-warn-soft)!important;border-color:rgba(245,185,65,.45)!important}
+.fd-toast{background:#f2f4f7!important;color:#111!important}
+.fd-dot.on{box-shadow:0 0 0 2px var(--fd-bg),0 0 0 4px var(--fd-accent)!important}
+.stu-pill{background:linear-gradient(90deg,rgba(255,196,0,.2),rgba(255,196,0,.06))!important;border-color:rgba(255,214,102,.6)!important;color:#ffd666!important;animation:stuGlow 2.6s ease-in-out infinite}
+.stu-pill b{color:#ffe08a!important}
+@keyframes stuGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,196,0,0)}50%{box-shadow:0 0 0 6px rgba(255,196,0,.12)}}
+.stu-tip{background:rgba(255,196,0,.11)!important;border-color:rgba(255,214,102,.45)!important;color:#ffe08a!important}.stu-tip b{color:#ffd666!important}
+.fd-stu{background:rgba(255,196,0,.07)!important;border-color:rgba(255,214,102,.45)!important}
 .lv-codes{display:flex;gap:10px;justify-content:center;margin:4px 0 12px}
-.lv-codes div{padding:12px 20px;border-radius:16px;background:#fff;border:1px solid var(--fd-line)}
+.lv-codes div{padding:12px 20px;border-radius:16px;background:var(--fd-surface);border:1px solid var(--fd-line)}
 .lv-codes small{display:block;color:var(--fd-muted);font-size:12.5px}.lv-codes b{font-size:30px;letter-spacing:.14em;font-variant-numeric:tabular-nums}
-.lv-codes div+div{border-color:#b9c9ff;background:var(--fd-accent-soft)}
+.lv-codes div+div{border-color:rgba(41,98,255,.6);background:var(--fd-accent-soft)}
 .lv-note{color:var(--fd-muted);font-size:13.5px;max-width:420px;margin:12px auto 0;line-height:1.6}
+.mine{border:1px solid;border-radius:20px;padding:14px 16px;margin:6px 0 0;display:grid;gap:10px}
+.mine-h b{display:block;font-size:15px}.mine-h small{color:var(--fd-muted);font-size:12.5px}
+.mine-i{display:flex;align-items:center;gap:10px;justify-content:space-between;padding-top:10px;border-top:1px solid var(--fd-line)}
+.mine-i div{min-width:0}.mine-i span{color:var(--fd-muted);font-size:13.5px}.mine-i small{display:block;color:var(--fd-muted);font-size:12.5px;margin-top:2px}
+.mine-i code{color:var(--fd-accent-text);font-weight:700;letter-spacing:.1em}.mine-i .fd-btn{flex:none}
 @media (max-width:420px){.lv-codes b{font-size:24px}.lv-codes div{padding:10px 14px}}
 </style>
 </head>
@@ -1484,7 +1513,33 @@ FD.ready = (async () => {
 })();
 
 // 설정·포트폴리오를 불러오면 첫 화면을 다시 그림 (학생 할인율·사례 반영)
-FD.ready.then(() => setTimeout(() => { if ((!location.hash || location.hash === "#/") && typeof window.route === "function") window.route(); }));
+FD.ready.then(() => setTimeout(() => { if ((!location.hash || location.hash === "#/") && typeof window.rerender === "function") window.rerender(); }));
+
+/* ---------- 운영용 화면 보강 ---------- */
+const KAKAO = "https://open.kakao.com/o/s85siVVi";
+const PREFILL = "fd_lk_prefill";
+const ss = {get(){ try{ return JSON.parse(sessionStorage.getItem(PREFILL) || "null"); }catch(e){ return null; } }, set(v){ try{ sessionStorage.setItem(PREFILL, JSON.stringify(v)); }catch(e){} }};
+FD.afterRoute = name => {
+  // 손님 화면에는 관리자 메뉴 대신 카카오 문의 (관리자는 주소 뒤 #admin)
+  const adm = document.querySelector('.top .r a[href="#/admin"]');
+  if (adm){ adm.href = KAKAO; adm.target = "_blank"; adm.rel = "noopener"; adm.className = "kk"; adm.innerHTML = FD.icon("chat") + "문의"; }
+  if (name === "" ){
+    const mine = FD.store.mine().slice(0, 3), hello = document.querySelector(".hello");
+    if (mine.length && hello) hello.insertAdjacentHTML("afterend", `<section class="mine" aria-label="이 기기에서 한 주문"><div class="mine-h"><b>이 기기에서 한 주문</b><small>번호와 조회 코드를 여기서 다시 볼 수 있어요</small></div>
+      ${mine.map(o => `<div class="mine-i"><div><b>#${esc(o.no)}</b> <span>${esc(o.title || "")}</span><small>조회 코드 <code>${esc(o.lkCode || "-")}</code> · ${new Date(o.createdAt).toLocaleDateString("ko-KR", {month: "long", day: "numeric"})}</small></div>
+        <button class="fd-btn sm" data-lk="${esc(o.no)}" data-cd="${esc(o.lkCode || "")}">진행 상황</button></div>`).join("")}</section>`);
+  }
+  if (name === "done"){ const no = location.hash.split("/")[2], o = FD.store.get(no); if (o) ss.set({no: o.no, code: o.lkCode}); }
+  if (name === "lookup"){ const v = ss.get(); if (v){ const n = document.getElementById("lkNo"), c = document.getElementById("lkCd"); if (n && !n.value) n.value = v.no || ""; if (c && !c.value) c.value = v.code || ""; (document.getElementById("lkPh") || {}).focus?.(); } }
+};
+document.addEventListener("click", e => { const b = e.target.closest("[data-lk]"); if (!b) return; ss.set({no: b.dataset.lk, code: b.dataset.cd}); location.hash = "#/lookup"; });
+// 휴대폰 번호 자동 하이픈 (010-1234-5678)
+document.addEventListener("input", e => {
+  const t = e.target; if (t.type !== "tel") return;
+  const d = t.value.replace(/\D/g, "").slice(0, 11);
+  const f = d.length < 4 ? d : d.length < 8 ? `${d.slice(0, 3)}-${d.slice(3)}` : d.length < 11 ? `${d.slice(0, 3)}-${d.slice(3, 6)}-${d.slice(6)}` : `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7)}`;
+  if (f !== t.value) t.value = f;
+});
 
 /* ---------- 조회 코드 ---------- */
 const LK_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
@@ -1772,14 +1827,15 @@ function route(){
   const [, name = "", arg] = location.hash.split("/");
   window.scrollTo(0, 0);
   if (name === "q") return drawQ();
-  if (name === "lookup"){ $("#app").innerHTML = topBar() + `<main class="page"><h1>주문 조회</h1><p class="why" style="color:var(--fd-muted)">주문번호와 휴대폰 번호를 넣으면 인증번호를 보내 드려요.</p><div id="lk"></div></main>`; return FD.mountLookup($("#lk")); }
+  if (name === "lookup"){ $("#app").innerHTML = topBar() + `<main class="page"><h1>주문 조회</h1><p class="why" style="color:var(--fd-muted)">${FD.LIVE ? "주문번호, 휴대폰 번호, 조회 코드 6자리를 넣어 주세요." : "주문번호와 휴대폰 번호를 넣으면 인증번호를 보내 드려요."}</p><div id="lk"></div></main>`; return FD.mountLookup($("#lk")); }
   if (name === "portfolio"){ $("#app").innerHTML = topBar() + `<main class="page"><h1>작업 사례</h1><div style="display:grid;gap:12px">${FD.PORTFOLIO.map(p => `<button class="pf" data-pf="${p.svc}"><img src="${p.img}" alt=""><div><b>${esc(p.t)}</b><small>${esc(p.d)} · ${FD.SAMPLE_TAG}</small></div></button>`).join("")}</div></main>`;
     return $$("[data-pf]").forEach(b => b.onclick = () => { home(); $(`[data-pf="${b.dataset.pf}"]`).click(); }); }
   if (name === "admin"){ $("#app").innerHTML = topBar() + `<main class="page wide"><div id="adm"></div></main>`; return FD.mountAdmin($("#adm")); }
   if (name === "done"){ const o = FD.store.get(arg); $("#app").innerHTML = topBar() + `<main class="page">${o ? FD.doneHTML(o) : "주문을 찾을 수 없어요."}<div class="ghost-row"><a class="fd-btn" href="#/lookup">주문 조회</a><a class="fd-btn ghost" href="#/">처음으로</a></div></main>`; return; }
   home();
 }
-addEventListener("hashchange", route); route();
+const go = window.rerender = () => { route(); FD.afterRoute && FD.afterRoute(location.hash.split("/")[1] || ""); };
+addEventListener("hashchange", go); go();
 </script>
 </body>
 </html>
