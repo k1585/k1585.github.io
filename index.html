@@ -552,6 +552,115 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
 /* ---- 집 모양 (처음으로) 버튼 ---- */
 .home-wide{display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .home-wide svg{display:block}
+
+/* ================= v12: 바로 시작 홈 + 견적 스튜디오 ================= */
+.home{position:relative}
+.home-top{display:flex;justify-content:flex-end;gap:8px;margin:-12px 0 8px}
+.hb-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;border:1px solid var(--line);
+  background:var(--card);color:var(--text);font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;font-family:inherit}
+.hb-chip.ic{padding:8px 11px}
+.hb-chip.kakao{background:#fee500;border-color:#fee500;color:#191919}
+.hb-chip svg{width:16px;height:16px}
+.home .logo-lockup .logo-sym{width:92px}.home .logo-lockup .logo-word{width:200px}
+.home .slogan{font-size:15px;margin-top:10px;color:var(--muted)}
+.hero-h{font-size:42px;line-height:1.22;letter-spacing:-.03em;margin:26px 0 10px;font-weight:800}
+.home .promo{margin-top:0}
+.starts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px;text-align:left}
+.start-card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1.5px solid var(--line);border-radius:20px;
+  padding:22px 22px 20px;cursor:pointer;min-height:250px;transition:transform .18s var(--ease),border-color .25s,background-color .25s,box-shadow .25s}
+.start-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.28)}
+.start-card:active{transform:scale(.98)}
+.start-card.over{border-color:var(--accent);background:var(--accent-soft)}
+.start-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sc-top{display:flex;justify-content:space-between;align-items:flex-start}
+.sc-no{font-size:13px;font-weight:800;color:var(--accent-text)}
+.sc-ic svg{display:block}
+.sc-t{display:block;font-size:19px;margin-top:6px;letter-spacing:-.02em}
+.sc-d{font-size:13.5px;color:var(--muted);line-height:1.6;margin:8px 0 12px}
+.sc-price{margin-top:auto;font-weight:800;font-size:15px}
+.sc-price .price-old{font-size:12px}
+.sc-idea{display:flex;gap:6px}
+.sc-idea input{flex:1;min-width:0;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--text);font-size:15px;font-family:inherit}
+.sc-idea input:focus{outline:none;border-color:var(--accent)}
+.sc-go{flex:none;width:48px;border-radius:12px;background:var(--accent);border:none;color:#fff;display:flex;align-items:center;justify-content:center;padding:0}
+.sc-chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
+.sc-chip{padding:5px 10px;border-radius:99px;border:1px dashed var(--line);background:transparent;color:var(--muted);font-size:12px}
+.sc-chip:hover{color:var(--text)}
+.home-guided{margin-top:14px;font-size:13.5px;color:var(--muted)}
+.hlk{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;max-width:720px;margin:18px auto 0;
+  padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:18px}
+.hlk b{font-size:14px;margin-right:4px}
+.hlk input{width:140px;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--field);color:var(--text);font-size:14px;font-family:inherit}
+.hlk input:first-of-type{width:110px;letter-spacing:.1em}
+.hlk input:focus{outline:none;border-color:var(--accent)}
+.hlk .btn-primary{padding:11px 18px;border-radius:10px}
+.hsteps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:left}
+.hsteps li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.hs-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent-text);
+  align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.hsteps b{display:block;margin-top:10px;font-size:16px}
+.hsteps small{display:block;margin-top:4px;color:var(--muted);font-size:13px;line-height:1.55}
+.stu-card{display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;margin-top:16px;padding:20px 22px;
+  border-radius:18px;background:linear-gradient(120deg,rgba(41,98,255,.22),rgba(41,98,255,.06));border:1px solid rgba(41,98,255,.4)}
+.stu-card b{display:block;font-size:17px}.stu-card small{display:block;color:var(--muted);margin-top:4px;font-size:13px;line-height:1.5}
+.stu-card .btn-primary{flex:none;border-radius:12px;padding:12px 18px}
+.finale{margin:48px 0 10px;padding:36px 20px;border-radius:22px;background:var(--card);border:1px solid var(--line)}
+.finale b{display:block;font-size:24px;letter-spacing:-.02em}.finale small{display:block;color:var(--muted);margin-top:6px}
+.finale .start-btn{margin-top:18px}
+@media (max-width:820px){
+  .starts{grid-template-columns:1fr}
+  .start-card{min-height:0}
+  .hsteps{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  .home-top{margin:-6px 0 4px}
+  .hero-h{font-size:28px;margin-top:20px}
+  .home .logo-lockup .logo-sym{width:72px}.home .logo-lockup .logo-word{width:170px}
+  .hlk{justify-content:stretch}
+  .hlk b{width:100%;text-align:left}
+  .hlk input,.hlk input:first-of-type{flex:1;width:auto;min-width:0}
+  .stu-card{flex-direction:column;align-items:stretch}
+}
+
+/* 재료 카드 · 색상 · 용도 */
+.sr-sel{position:absolute!important;width:1px!important;height:1px!important;opacity:0;pointer-events:none;overflow:hidden}
+.qopt{position:relative}
+.mat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mat-card{text-align:left;padding:11px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--field);display:block}
+.mat-card b{display:block;font-size:14px}
+.mat-card small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.mat-card.on{border-color:var(--accent);background:var(--accent-soft)}
+.color-dots{display:flex;flex-wrap:wrap;gap:9px}
+.cdot{width:34px;height:34px;border-radius:50%;padding:0;border:2px solid rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.cdot.on{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
+.cdot.clear{background:repeating-conic-gradient(#d4d6db 0 25%,#f5f6f8 0 50%) 50%/12px 12px}
+.cdot.other{background:conic-gradient(#ff4d4d,#ffcc00,#33cc66,#3399ff,#9966ff,#ff4d4d)}
+.color-name{font-size:13px;color:var(--muted);margin-top:8px}
+.pchips{display:flex;flex-wrap:wrap;gap:6px}
+.pchip{padding:8px 13px;border-radius:99px;border:1.5px solid var(--line);background:var(--field);font-size:13.5px}
+.pchip.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-text);font-weight:700}
+@media (max-width:560px){.mat-cards{grid-template-columns:repeat(2,1fr)}}
+
+/* 데스크톱: 왼쪽 미리보기 고정 + 오른쪽 옵션 */
+@media (min-width:1000px){
+  #mode-file.narrow{max-width:none;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:start}
+  #mode-file>section:first-child{grid-row:1 / span 2;position:sticky;top:16px;margin-bottom:0}
+  #mode-file>section{margin-bottom:0}
+  #mode-file #view{height:460px!important}
+}
+
+/* 휴대폰 아래 고정 가격 바 */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;gap:12px;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(32,33,36,.94);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);animation:itemIn .35s var(--ease) both}
+.mbar[hidden]{display:none}
+.mbar-p{flex:1;min-width:0}
+.mbar-p small{display:block;font-size:12px;color:var(--muted)}
+.mbar-p b{font-size:21px;letter-spacing:-.02em}
+.mbar-p .price-old{font-size:12px}
+.mbar .btn-primary{flex:none;padding:13px 26px;border-radius:12px;font-size:15px}
+body.has-mbar{padding-bottom:84px}
+@media (min-width:1000px){.mbar{display:none!important}body.has-mbar{padding-bottom:0}}
 </style>
 </head>
 <body>
@@ -594,10 +703,13 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
          <h2><span class="snum">2</span><span data-t="quick.title">옵션</span></h2>
          <div class="seg sm styleSeg"><button data-v="quick" data-t="top.quick">🚀 빠른</button><button data-v="detail" data-t="top.detail">🛠 상세</button></div>
        </div>
-       <div class="qopt"><div class="qlabel" data-t="quick.mat">재료</div><select id="q_mat"></select>
+       <div class="qopt"><div class="qlabel" data-t="quick.mat">재료</div><select id="q_mat" class="sr-sel" tabindex="-1" aria-hidden="true"></select>
+         <div class="mat-cards" id="matCards"></div>
          <div class="hint beg-only" data-t="quick.matHint">모르면 <b>PLA Basic</b>을 고르세요. 재료에 따라 가격·무게가 달라져요.</div></div>
-       <div class="qopt"><div class="qlabel" data-t="quick.color">색상</div><select id="q_color"></select></div>
-       <div class="qopt"><div class="qlabel" data-t="quick.purpose">사용 용도</div><select id="q_purpose"></select>
+       <div class="qopt"><div class="qlabel" data-t="quick.color">색상</div><select id="q_color" class="sr-sel" tabindex="-1" aria-hidden="true"></select>
+         <div class="color-dots" id="colorDots"></div><div class="color-name" id="colorName"></div></div>
+       <div class="qopt"><div class="qlabel" data-t="quick.purpose">사용 용도</div><select id="q_purpose" class="sr-sel" tabindex="-1" aria-hidden="true"></select>
+         <div class="pchips" id="purposeChips"></div>
          <div class="hint" id="purposeHint" hidden></div></div>
 
        <div id="quickOpts" class="quick-only">
@@ -645,6 +757,9 @@ button:active:not(:disabled),.btn-store:active,.wz-card:active{transform:scale(.
    <div id="mode-sketch" class="mode-panel" hidden></div>
    <div id="mode-idea" class="mode-panel" hidden></div>
   </div>
+  <!-- 휴대폰: 아래 고정 가격 바 -->
+  <div class="mbar" id="mbar" hidden><div class="mbar-p"><small data-t="mbar.label">예상 견적</small><b id="mbarTotal">-</b></div>
+    <button class="btn-primary" id="mbarBtn">주문하기</button></div>
  </div>
 
  <!-- 복사 실패 시 직접 복사 -->
@@ -960,6 +1075,29 @@ const TDEF = {
  "msg.hugeFile": "파일이 너무 커요 (최대 {mb}MB). 모델을 줄이거나 나눠서 올려 주세요.",
  "top.sfxOn": "🔊", "top.sfxOff": "🔇",
  "home.lookup": "주문 조회",
+ "home.hero": "가진 것만 올리면,<br>나머지는 저희가 만들어요",
+ "home.heroSub": "3D 파일, 스케치, 아이디어 한 줄. 무엇이든 시작할 수 있어요.",
+ "home.c.file.t": "3D 파일이 있어요", "home.c.file.d": "STL · 3MF · G-code를 올리면 바로 견적이 나와요. 눌러서 고르거나 끌어다 놓으세요.",
+ "home.c.sketch.t": "스케치·도면·사진이 있어요", "home.c.sketch.d": "손그림, 치수 적은 종이, 부러진 부품 사진도 좋아요. 여러 장 올릴 수 있어요.",
+ "home.c.idea.t": "아이디어만 있어요", "home.c.idea.d": "무엇이 필요한지 한 줄로 적어 주세요.",
+ "home.c.idea.ph": "예: 책상 밑 멀티탭 거치대",
+ "home.c.idea.chips": "책상 밑 멀티탭 거치대|핑거보드 트랙|부러진 부품 교체",
+ "home.guided": "천천히 안내받으며 시작하기 (초보자·숙련자 선택)",
+ "home.lkTitle": "내 주문 확인", "home.lkNo": "번호 4자리", "home.lkBtn": "조회",
+ "home.stepsTitle": "이렇게 진행돼요",
+ "home.s1.t": "올리기", "home.s1.d": "파일·스케치·아이디어 중 가진 것을 올려요.",
+ "home.s2.t": "확인·안내", "home.s2.d": "요구사항을 확인하고 연락처로 안내드려요.",
+ "home.s3.t": "제작", "home.s3.d": "꼼꼼하게 설계하고 출력해요.",
+ "home.s4.t": "배송", "home.s4.d": "네이버쇼핑에서 배송 현황을 확인할 수 있어요.",
+ "home.stuTitle": "🎓 학생이면 {rate}% 할인",
+ "home.stuDesc": "학생증이 보이는 5초 이상 영상만 올리면 디자인비·출력비 모두 할인돼요.",
+ "home.stuBtn": "학생 인증하기",
+ "home.finale": "만들고 싶은 게 떠올랐나요?",
+ "home.finaleSub": "지금 올리면 바로 견적이 나와요.",
+ "home.finaleBtn": "지금 시작하기",
+ "home.contact": "문의",
+ "studio.matTip": "잘 모르겠으면 <b>PLA Basic</b>이 가장 무난해요.",
+ "mbar.label": "예상 견적", "mbar.order": "주문하기", "mbar.needFile": "파일 올리기",
  "lookup.title": "주문 조회",
  "lookup.sub": "주문할 때 받은 4자리 번호와 남겨 주신 연락처를 넣어 주세요.",
  "lookup.no": "주문번호 (4자리)", "lookup.contact": "연락처",
@@ -1801,6 +1939,7 @@ function route(screen){
   if (inForm) renderForm(); else renderScreen(["home","way","pick","lookup"].includes(screen) ? screen : "home");
   window.scrollTo(0, 0);
   animIn(inForm ? $("formArea") : $("wizard"));
+  updateMbar();
 }
 // 화면이 바뀔 때 살짝 떠오르며 나타나는 모션
 function animIn(el){ if (!el) return; el.classList.remove("screen-in"); void el.offsetWidth; el.classList.add("screen-in"); }
@@ -1841,21 +1980,53 @@ function renderPortfolio(){
 function renderScreen(step){
   const W = $("wizard");
   if (step === "home"){
+    const modePrice = k => k === "file" ? t("pick.free")
+      : t("pick.fee", {price: priceHtml(DESIGN_FEE[k])}) + (stuOn() ? ` <small>(${t("pick.stuTag")})</small>` : "");
+    const chips = plain(tRaw("home.c.idea.chips")).split("|").map(s => s.trim()).filter(Boolean);
     W.innerHTML = `<div class="home">
+      <div class="home-top">${sfxBtnHtml()}<button class="hb-chip" id="homeLookup">${t("home.lookup")}</button>
+        <a class="hb-chip kakao" href="${KAKAO_CHAT_URL}" target="_blank" rel="noopener">${KAKAO_ICON}<span>${t("home.contact")}</span></a></div>
       <div class="brand adminTrigger logo-lockup" id="homeBrand" aria-label="FORMDOT">${LOGO_SYMBOL}${LOGO_WORD}</div>
       <div class="slogan">${t("home.slogan")}</div>
-      <p class="promo">${t("home.promo")}</p>
-      <div class="home-btns"><button class="btn-primary start-btn" id="homeStart">${t("home.start")}</button>
-        <button class="start-btn ghost" id="homeLookup">${t("home.lookup")}</button></div>
-      <div class="home-kakao">${kakaoBtn(KAKAO_CHAT_URL, "kakao.home", "link")}</div>
+      <h1 class="hero-h">${t("home.hero")}</h1>
+      <p class="promo">${t("home.heroSub")}</p>
+      <div class="starts">
+        <div class="start-card" id="scFile" data-go="file" tabindex="0" role="button">
+          <div class="sc-top"><span class="sc-no">01</span><span class="sc-ic">${SC_ICON.file}</span></div>
+          <b class="sc-t">${t("home.c.file.t")}</b><p class="sc-d">${t("home.c.file.d")}</p>
+          <div class="sc-price">${modePrice("file")}</div>
+          <input type="file" id="homeFile" accept=".stl,.3mf,.gcode,.gco,.g" hidden></div>
+        <div class="start-card" data-go="sketch" tabindex="0" role="button">
+          <div class="sc-top"><span class="sc-no">02</span><span class="sc-ic">${SC_ICON.sketch}</span></div>
+          <b class="sc-t">${t("home.c.sketch.t")}</b><p class="sc-d">${t("home.c.sketch.d")}</p>
+          <div class="sc-price">${modePrice("sketch")}</div></div>
+        <div class="start-card" data-go="idea">
+          <div class="sc-top"><span class="sc-no">03</span><span class="sc-ic">${SC_ICON.idea}</span></div>
+          <b class="sc-t">${t("home.c.idea.t")}</b><p class="sc-d">${t("home.c.idea.d")}</p>
+          <form class="sc-idea" id="ideaForm"><input type="text" id="ideaIn" maxlength="200" placeholder="${escapeHtml(plain(tRaw("home.c.idea.ph")))}" aria-label="${escapeHtml(plain(tRaw("home.c.idea.t")))}">
+            <button type="submit" class="sc-go" aria-label="아이디어로 시작">${ARROW_ICON}</button></form>
+          <div class="sc-chips">${chips.map(c => `<button type="button" class="sc-chip">${escapeHtml(c)}</button>`).join("")}</div>
+          <div class="sc-price">${modePrice("idea")}</div></div>
+      </div>
+      <button class="link-btn home-guided" id="homeStart">${t("home.guided")} →</button>
+      <form class="hlk" id="hlkForm"><b>${t("home.lkTitle")}</b>
+        <input type="text" id="hlkNo" inputmode="numeric" maxlength="4" placeholder="${escapeHtml(plain(tRaw("home.lkNo")))}" autocomplete="off" aria-label="주문 번호">
+        <input type="tel" id="hlkContact" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="${escapeHtml(plain(tRaw("lookup.contact")))}" aria-label="연락처">
+        <button type="submit" class="btn-primary">${t("home.lkBtn")}</button></form>
+      <h2 class="pf-title">${t("home.stepsTitle")}</h2>
+      <ol class="hsteps">${[1,2,3,4].map(i => `<li><span class="hs-n">${i}</span><b>${t(`home.s${i}.t`)}</b><small>${t(`home.s${i}.d`)}</small></li>`).join("")}</ol>
+      <div class="stu-card"><div><b>${t("home.stuTitle")}</b><small>${t("home.stuDesc")}</small></div>
+        <button class="btn-primary" id="homeStu">${t("home.stuBtn")}</button></div>
       <h2 class="pf-title">${t("home.pfTitle")}</h2>
       <div class="pf-grid">${renderPortfolio()}</div>
       <h2 class="pf-title">${t("faq.title")}</h2>
       <div class="faq">${[1,2,3,4,5,6].map(i => `<div class="acc"><button type="button" class="acc-head" aria-expanded="false">
         <span class="acc-t">${t("faq.q" + i)}</span><span class="acc-arrow">›</span></button>
-        <div class="acc-body" hidden>${t("faq.a" + i)}</div></div>`).join("")}</div></div>`;
-    $("homeStart").onclick = () => nav("way");
-    $("homeLookup").onclick = () => nav("lookup");
+        <div class="acc-body" hidden>${t("faq.a" + i)}</div></div>`).join("")}</div>
+      <div class="home-kakao">${kakaoBtn(KAKAO_CHAT_URL, "kakao.home", "link")}</div>
+      <div class="finale"><b>${t("home.finale")}</b><small>${t("home.finaleSub")}</small>
+        <button class="btn-primary start-btn" id="homeFinale">${t("home.finaleBtn")}</button></div></div>`;
+    bindHome(W);
     onLongPress($("homeBrand"), 3000, () => openPin());
     return;
   }
@@ -1923,6 +2094,104 @@ function renderScreen(step){
   }
   $("wzBack").onclick = () => history.back();
 }
+/* ---- 홈: 바로 시작 카드 ---- */
+const SC_ICON = {
+  file: '<svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><path d="M24 5 41 14.5v19L24 43 7 33.5v-19z M7 14.5 24 24l17-9.5 M24 24v19" fill="none" stroke="#5b8cff" stroke-width="2.6" stroke-linejoin="round"/></svg>',
+  sketch: '<svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><rect x="6" y="6" width="36" height="36" rx="7" fill="none" stroke="#f0a640" stroke-width="2.6"/><circle cx="17" cy="17" r="3.5" fill="#f0a640"/><path d="M11 33c6-9 10-10 14-5s7 3 12-6" fill="none" stroke="#f0a640" stroke-width="2.6" stroke-linecap="round"/></svg>',
+  idea: '<svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><path d="M24 5a13 13 0 0 0-8 23.3c1.6 1.3 2.5 3 2.5 4.7v1h11v-1c0-1.7.9-3.4 2.5-4.7A13 13 0 0 0 24 5z" fill="rgba(52,199,120,.18)" stroke="#34c778" stroke-width="2.6" stroke-linejoin="round"/><path d="M19 39h10M20.5 43h7" stroke="#34c778" stroke-width="2.6" stroke-linecap="round"/></svg>'};
+const ARROW_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const sfxBtnHtml = () => `<button class="hb-chip ic" id="homeSfx" aria-label="효과음">${sfxOn ? "🔊" : "🔇"}</button>`;
+// 홈에서 바로 시작: 처음 오신 분은 초보자 · 빠른 견적으로
+function goMode(mode){
+  if (!prefs.level) prefs.level = "beg";
+  if (!prefs.style) prefs.style = "quick";
+  prefs.mode = mode; savePrefs(); nav("form");
+}
+function bindHome(W){
+  const fc = $("scFile"), fin = $("homeFile");
+  W.querySelectorAll(".start-card[data-go]").forEach(c => {
+    const go = e => {
+      if (e.target.closest("form, .sc-chip, input")) return;
+      if (c.dataset.go === "file") return fin.click();
+      sfx("select"); goMode(c.dataset.go);
+    };
+    c.addEventListener("click", go);
+    c.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target === c){ e.preventDefault(); go(e); } });
+  });
+  const startFile = f => { goMode("file"); handleFile(f); };
+  fin.onchange = () => { const f = fin.files[0]; fin.value = ""; if (f) startFile(f); };
+  ["dragenter","dragover"].forEach(ev => fc.addEventListener(ev, e => { e.preventDefault(); fc.classList.add("over"); }));
+  ["dragleave","drop"].forEach(ev => fc.addEventListener(ev, e => { e.preventDefault(); fc.classList.remove("over"); }));
+  fc.addEventListener("drop", e => e.dataTransfer.files[0] && startFile(e.dataTransfer.files[0]));
+  W.querySelectorAll(".sc-chip").forEach(b => b.onclick = () => { $("ideaIn").value = b.textContent; $("ideaIn").focus(); sfx("select"); });
+  $("ideaForm").onsubmit = e => {
+    e.preventDefault();
+    const v = $("ideaIn").value.trim();
+    goMode("idea");
+    if (v && $("idea_title")){ $("idea_title").value = v; const d = $("idea_desc"); if (d) setTimeout(() => d.focus({preventScroll: true}), 350); }
+  };
+  $("hlkNo").addEventListener("input", () => { $("hlkNo").value = $("hlkNo").value.replace(/\D/g, "").slice(0, 4); });
+  $("hlkForm").onsubmit = e => {
+    e.preventDefault();
+    const no = $("hlkNo").value, ct = $("hlkContact").value;
+    nav("lookup"); $("lkNo").value = no; $("lkContact").value = ct;
+    if (no || ct) doLookup();
+  };
+  $("homeStart").onclick = () => nav("way");
+  $("homeStu").onclick = () => { student.on = true; prefs.student = true; savePrefs(); nav("way"); };
+  $("homeLookup").onclick = () => nav("lookup");
+  $("homeFinale").onclick = () => { W.querySelector(".starts").scrollIntoView({behavior: "smooth", block: "center"}); };
+  $("homeSfx").onclick = () => { $("tbSfx").click(); $("homeSfx").textContent = sfxOn ? "🔊" : "🔇"; };
+  onLongPress($("homeBrand"), 3000, () => openPin());
+}
+
+/* ---- 견적 스튜디오: 재료 카드 · 색상 동그라미 · 용도 칩 ---- */
+const COLOR_HEX = {"흰색":"#f4f4f5","검정":"#1c1c1f","회색":"#8e9196","빨강":"#e5383b","주황":"#f28c28","노랑":"#f5c518","초록":"#2ea44f",
+  "파랑":"#2f6fe4","보라":"#8b55d6","분홍":"#f4a0c0","갈색":"#8b5a3c"};
+const MAT_SHORT = {"PLA":"무난한 기본","PLA-Matte":"무광 질감","PLA-Silk":"반짝이는 광택","PETG":"질기고 물에 강함","ABS":"열·충격에 강함",
+  "ASA":"실외·햇빛용","TPU":"고무처럼 말랑","PLA-CF":"탄소섬유·단단","PETG-CF":"탄소섬유·강성"};
+function renderPickers(){
+  const opts = sel => [...$(sel).options].map(o => [o.value, o.textContent]);
+  $("matCards").innerHTML = opts("q_mat").map(([v, tx]) => {
+    const m = tx.match(/^(.*?)\s*\((.*)\)\s*$/), name = m ? m[1] : tx;
+    return `<button type="button" class="mat-card" data-v="${escapeHtml(v)}"><b>${escapeHtml(name)}</b><small>${ov("mat.s." + v, MAT_SHORT[v] || (m ? m[2] : ""))}</small></button>`;
+  }).join("");
+  $("colorDots").innerHTML = opts("q_color").map(([v, tx]) => {
+    const st = COLOR_HEX[v] ? `background:${COLOR_HEX[v]}` : "";
+    const cls = v === "투명" ? " clear" : COLOR_HEX[v] ? "" : " other";
+    return `<button type="button" class="cdot${cls}" data-v="${escapeHtml(v)}" style="${st}" title="${escapeHtml(tx)}" aria-label="${escapeHtml(tx)}"></button>`;
+  }).join("");
+  $("purposeChips").innerHTML = opts("q_purpose").map(([v, tx]) => `<button type="button" class="pchip" data-v="${escapeHtml(v)}">${escapeHtml(tx)}</button>`).join("");
+  syncPickers();
+}
+function syncPickers(){
+  const on = (box, sel) => $(box).querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.v === $(sel).value));
+  on("matCards", "q_mat"); on("colorDots", "q_color"); on("purposeChips", "q_purpose");
+  const c = $("q_color"); $("colorName").textContent = c.options[c.selectedIndex] ? c.options[c.selectedIndex].textContent : "";
+}
+[["matCards","q_mat"],["colorDots","q_color"],["purposeChips","q_purpose"]].forEach(([box, sel]) =>
+  $(box).addEventListener("click", e => {
+    const b = e.target.closest("button[data-v]"); if (!b || $(sel).value === b.dataset.v) return;
+    $(sel).value = b.dataset.v; $(sel).dispatchEvent(new Event("change")); syncPickers(); sfx("select");
+  }));
+
+/* ---- 휴대폰 아래 고정 가격 바 ---- */
+let priceCardSeen = false;
+function updateMbar(){
+  const bar = $("mbar"); if (!bar) return;
+  const show = !$("formArea").hidden && prefs.mode === "file" && !$("quoteView").hidden && !priceCardSeen;
+  bar.hidden = !show; document.body.classList.toggle("has-mbar", show);
+  const ok = current && !current.tooBig;
+  $("mbarTotal").innerHTML = ok ? $("total").innerHTML : "-";
+  $("mbarBtn").textContent = plain(t(ok ? "mbar.order" : "mbar.needFile"));
+}
+if ("IntersectionObserver" in window)
+  new IntersectionObserver(es => { priceCardSeen = es[0].isIntersecting; updateMbar(); }).observe($("orderBtn"));
+$("mbarBtn").onclick = () => {
+  if (!current || current.tooBig){ $("drop").scrollIntoView({behavior: "smooth", block: "center"}); return; }
+  $("priceCard").scrollIntoView({behavior: "smooth", block: "start"});
+};
+
 function renderForm(){
   const m = prefs.mode;
   document.querySelectorAll(".mode-panel").forEach(p => p.hidden = p.id !== "mode-" + m);
@@ -1931,6 +2200,7 @@ function renderForm(){
   document.querySelectorAll(".styleSeg button").forEach(b => b.classList.toggle("on", b.dataset.v === prefs.style));
   $("q_mat").value = $("mat").value; $("q_color").value = $("color").value;
   if (m === "file" && prefs.style === "quick") applyQuick(); else updateAccSummaries();
+  syncPickers();
   refreshPrices();
   requestAnimationFrame(() => draw());
 }
@@ -1951,10 +2221,12 @@ function updatePrice(){
   if (!ok){
     $("total").textContent = "-"; $("wOut").textContent = "-"; totalShown = null;
     $("summary").innerHTML = current ? t("price.tooBig") : t("price.empty");
+    updateMbar();
     return {g, m, total, final};
   }
   setTotal(total);
   $("wOut").textContent = g.toFixed(1) + "g";
+  setTimeout(updateMbar, 0);
   const qty = Math.max(1, parseInt($("qty").value) || 1);
   $("summary").innerHTML = [qty > 1 ? t("price.qtyNote", {n: qty}) : "", stuOn() ? t("price.stuNote") : ""].filter(Boolean).join(" · ");
   return {g, m, total, final};
@@ -2406,7 +2678,7 @@ function preparePreview(geo){
     tris.push({t, n: [nx/l, ny/l, nz/l]});
   }
   const c = geo.min.map((v,i)=>(v+geo.max[i])/2);
-  const r = Math.max(...geo.max.map((v,i)=>v-geo.min[i]))/2 || 1;
+  const r = Math.hypot(...geo.max.map((v,i)=>v-geo.min[i]))/2 || 1;   // 대각선 기준이라 어느 방향으로 돌려도 화면 안에 들어옴
   prev = {tris, c, r, min: geo.min, max: geo.max};
   yaw = VIEW0.yaw; pitch = VIEW0.pitch; zoom = VIEW0.zoom;
   startSpin(tris.length <= 12000);
@@ -2432,7 +2704,7 @@ function draw(){
   cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
   ctx.clearRect(0,0,W,H);
   const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
-  const s = Math.min(W,H)*0.40/prev.r*zoom, {c} = prev;
+  const s = Math.min(W,H)*0.46/prev.r*zoom, {c} = prev;
   const proj = (x,y,z) => {
     x-=c[0]; y-=c[1]; z-=c[2];
     const x1 = x*cy - y*sy, y1 = x*sy + y*cy;
@@ -2624,6 +2896,7 @@ $("backBtnIc").innerHTML = HOME_ICON;
 $("tbBack").addEventListener("click", () => history.length > 1 ? history.back() : nav("pick"));
 function showView(id){
   for (const v of ["quoteView","orderView","adminView"]) $(v).hidden = v !== id;
+  setTimeout(updateMbar, 0);
   window.scrollTo(0, 0);
   if (id === "quoteView") requestAnimationFrame(draw);
 }
@@ -2649,6 +2922,7 @@ function initUI(){
   $("q_mat").innerHTML = $("mat").innerHTML;
   $("q_color").innerHTML = $("color").innerHTML;
   renderQuickSegs();
+  renderPickers();
   renderReqMode("sketch");
   renderReqMode("idea");
   $("fileConsentSlot").innerHTML = consentHtml("fileConsent");
