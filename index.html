@@ -794,7 +794,7 @@ body.has-mbar{padding-bottom:84px}
        <div class="guide beg-only" data-t="file.guide">💡 STL·3MF는 3D 모델 파일이에요. MakerWorld·Thingiverse에서 받은 파일이나 직접 만든 파일을 올려 주세요. 뱀부 스튜디오에서 슬라이싱한 파일(.gcode.3mf)이면 가장 정확해요.</div>
        <div id="drop" class="lp" tabindex="0">
          <b class="drop-again" data-t="file.again">📎 다른 파일로 바꾸기</b><b class="drop-main" data-t="file.drop">여기로 파일을 끌어다 놓거나 클릭하세요</b>
-         <small data-t="file.dropSub">STL · 3MF · G-code · 최대 300 × 300 × 300 mm</small>
+         <small data-t="file.dropSub">STL · 3MF · G-code · 최대 256 × 256 × 256 mm</small>
          <input id="file" type="file" accept=".stl,.3mf,.gcode,.gco,.g" hidden>
        </div>
        <div id="fileInfo"></div>
@@ -998,7 +998,7 @@ const $ = id => document.getElementById(id);
 
 /* ======== 설정: 스마트스토어 주소를 여기에 넣으세요 ======== */
 const SMARTSTORE_URL = "https://smartstore.naver.com/";
-const MAX_SIZE = 300;   // 최대 출력 크기 (mm, 가로·세로·높이 각각)
+const MAX_SIZE = 256;   // 최대 출력 크기 (mm, 가로·세로·높이 각각)
 const MAX_FILE_MB = 50; // 주문 시 올릴 수 있는 최대 파일 크기 (MB)
 
 /* ======== 필라멘트 가격 (뱀부랩 1kg 리필 기준, 원) ========
@@ -1087,7 +1087,7 @@ const TDEF = {
  "stu.chipOk": "🎓 학생가 적용", "stu.chipNeed": "🎓 학생 인증 필요",
  "stu.rowLabel": "학생 할인", "stu.rowValue": "{rate}% 적용 (인증 영상 첨부)",
  "pick.title": "어떤 의뢰인가요?",
- "pick.sub": "가지고 있는 것에 맞춰 골라 주세요. (최대 출력 크기 300 × 300 × 300 mm)",
+ "pick.sub": "가지고 있는 것에 맞춰 골라 주세요. (최대 출력 크기 256 × 256 × 256 mm)",
  "pick.file.t": "3D 파일 있음", "pick.file.d": "바로 출력 가능 · 추가 비용 없음",
  "pick.file.ex": "STL·3MF·G-code 파일을 올리면 바로 가격이 나와요",
  "pick.sketch.t": "2D 도면 · 설계도 · 스케치만 있음", "pick.sketch.d": "그림을 보고 3D 모델로 만들어 드려요",
@@ -1168,7 +1168,7 @@ const TDEF = {
  "faq.q2": "결제는 어떻게 하나요?",
  "faq.a2": "사이트에서 주문·견적 요청을 하면 4자리 번호가 나와요. 스마트스토어에서 주문할 때 <b>옵션에 그 번호</b>를 적어 주시면 확인 후 제작을 시작해요.",
  "faq.q3": "얼마나 큰 것까지 만들 수 있나요?",
- "faq.a3": "한 번에 가로·세로·높이 각각 최대 300mm까지 출력할 수 있어요. 더 큰 물건은 나눠서 출력한 뒤 조립하는 방법을 안내해 드려요.",
+ "faq.a3": "한 번에 가로·세로·높이 각각 최대 256mm까지 출력할 수 있어요. 더 큰 물건은 나눠서 출력한 뒤 조립하는 방법을 안내해 드려요.",
  "faq.q4": "어떤 재료를 골라야 할지 모르겠어요.",
  "faq.a4": "소품·장식품은 <b>PLA Basic</b>, 물이 닿거나 튼튼해야 하면 <b>PETG HF</b>, 햇빛을 받는 실외용은 <b>ASA</b>를 추천해요. 잘 모르겠으면 요청할 때 <b>추천해 주세요</b>를 고르세요.",
  "faq.q5": "표시된 금액이 최종 금액인가요?",
@@ -1606,7 +1606,7 @@ function renderReqMode(mode){
     else if (f.type === "number") ctl = `<input type="number" id="${id}" min="${f.min}" max="${f.max}" value="${f.def}" style="width:120px">`;
     else if (f.type === "select") ctl = `<select id="${id}">${f.list.map(([v,tx]) => `<option value="${v}"${v === f.def ? " selected" : ""}>${tx}</option>`).join("")}</select>`;
     else if (f.type === "dims") ctl = `<div class="dims">${["가로","세로","높이"].map((tx, i) =>
-        `<input type="number" id="${id}_${i}" min="1" max="300" placeholder="${tx}" aria-label="${tx} (mm)">`).join("<span>×</span>")}<span>mm</span></div>`;
+        `<input type="number" id="${id}_${i}" min="1" max="256" placeholder="${tx}" aria-label="${tx} (mm)">`).join("<span>×</span>")}<span>mm</span></div>`;
     else if (f.type === "files") ctl = `<div class="att-drop lp" id="${id}_drop" tabindex="0">${t("req.drop")}<br><small>${t("req.dropSub")}</small></div>
         <input type="file" id="${id}" accept="image/*,.pdf" multiple hidden><div class="att-list" id="${id}_list"></div>`;
     return `<div class="fld${M.quick.includes(f.id) ? "" : " detail-only"}" data-fid="${f.id}">
