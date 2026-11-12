@@ -801,6 +801,9 @@ body.has-mbar{padding-bottom:84px}
 .price-guide summary{cursor:pointer;padding:13px 0;font-weight:700}
 .pg{padding-bottom:12px;font-size:14px;line-height:1.65}.pg h3{font-size:15px;margin:12px 0 6px}.pg ul{margin:0;padding-left:18px}.pg li{margin:3px 0}
 .pg-f{font-weight:700;padding:8px 12px;border-radius:10px;background:var(--accent-soft);margin:4px 0 8px}
+/* 누를 때 파란 하이라이트·글자 선택 없애기 */
+html{-webkit-tap-highlight-color:transparent}
+button,a,label,summary,.acc-head,.wz-card,[role="button"]{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 </style>
 </head>
 <body>
