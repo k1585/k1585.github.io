@@ -3189,8 +3189,13 @@ async function submitOrder(d, files, progress){
 
 /* ================= 사이트 설정 (문구 · 포트폴리오 · 가격) ================= */
 // 코드에 적힌 처음 가격 (관리자 > 가격 설정의 "기본값으로")
-const PRICE_DEFAULTS = JSON.parse(JSON.stringify({filament: FILAMENT_PRICE, print: PRINT_PRICE,
-  design: {sketch: DESIGN_FEE.sketch, idea: DESIGN_FEE.idea, baseMin: DESIGN_BASE_MIN, stepMin: DESIGN_STEP_MIN, stepFee: DESIGN_STEP_FEE},
+const EST_ITEMS = [["simple", "난이도: 단순", 60], ["normal", "난이도: 보통", 120], ["complex", "난이도: 복잡", 210],
+  ["screw", "기능: 나사·볼트 구멍", 15], ["fit", "기능: 끼움·맞물림", 30], ["hinge", "기능: 힌지·움직이는 부분", 45], ["text", "기능: 글자·로고 각인", 20],
+  ["multi", "기능: 여러 부품 조립", 40], ["exact", "기능: 치수 정확히", 30], ["part", "전문 모델링: 부품 1개 늘 때마다", 30],
+  ["scale", "모델 수정: 크기 조정만", 20], ["hole", "모델 수정: 구멍·부분 추가/삭제", 45], ["shape", "모델 수정: 형태 일부 변경", 90]];
+let EST = Object.fromEntries(EST_ITEMS.map(([k, , v]) => [k, v]));
+const PRICE_DEFAULTS = JSON.parse(JSON.stringify({filament: FILAMENT_PRICE, print: PRINT_PRICE, est: EST,
+  design: {sketch: DESIGN_FEE.sketch, idea: DESIGN_FEE.idea, modify: DESIGN_FEE.modify, pro: DESIGN_FEE.pro, baseMin: DESIGN_BASE_MIN, stepMin: DESIGN_STEP_MIN, stepFee: DESIGN_STEP_FEE},
   studentRate: STUDENT_RATE}));
 function applySettings(st){
   if (!st) return;
@@ -3199,6 +3204,8 @@ function applySettings(st){
   for (const k in PRINT_PRICE) PRINT_PRICE[k] = num((st.print || {})[k], PRINT_PRICE[k]);
   const ds = st.design || {};
   DESIGN_FEE.sketch = num(ds.sketch, DESIGN_FEE.sketch); DESIGN_FEE.idea = num(ds.idea, DESIGN_FEE.idea);
+  DESIGN_FEE.modify = num(ds.modify, DESIGN_FEE.modify); DESIGN_FEE.pro = num(ds.pro, DESIGN_FEE.pro);
+  for (const k in EST) EST[k] = num((st.est || {})[k], EST[k]);
   DESIGN_BASE_MIN = num(ds.baseMin, DESIGN_BASE_MIN); DESIGN_STEP_MIN = Math.max(1, num(ds.stepMin, DESIGN_STEP_MIN));
   DESIGN_STEP_FEE = num(ds.stepFee, DESIGN_STEP_FEE);
   STUDENT_RATE = Math.min(0.9, Math.max(0, num(st.studentRate, STUDENT_RATE)));
@@ -3636,10 +3643,13 @@ function renderSettings(){
       <p class="note" style="margin-top:0">출력비 = (재료비 + 분당 기계비 × 출력 분 + 기본비) × 마진 배율</p>
       ${f("set-perMin", "분당 기계비", PRINT_PRICE.perMin, "원", 0.1)}${f("set-base", "기본비 (주문 1건)", PRINT_PRICE.base, "원", 100)}
       ${f("set-margin", "마진 배율 (1.4 = 1.4배)", PRINT_PRICE.margin, "배", 0.05)}</div>
-    <div class="card sec"><h2>✏️ 디자인비</h2>
-      ${f("set-sketch", "스케치·도면 기본", DESIGN_FEE.sketch, "원", 500)}${f("set-idea", "아이디어 기본", DESIGN_FEE.idea, "원", 500)}
+    <div class="card sec"><h2>✏️ 의뢰 출력 — 디자인 기본비</h2><p class="note" style="margin-top:0">손님이 의뢰할 때 먼저 결제하는 금액이에요. 기본 시간이 포함되고, 넘으면 추가 금액이 붙어요.</p>
+      ${f("set-sketch", "손그림·도면 기본", DESIGN_FEE.sketch, "원", 500)}${f("set-idea", "아이디어 기본", DESIGN_FEE.idea, "원", 500)}
+      ${f("set-modify", "기존 모델 수정 기본", DESIGN_FEE.modify, "원", 500)}${f("set-pro", "전문 3D 모델링 기본", DESIGN_FEE.pro, "원", 500)}
       ${f("set-baseMin", "기본에 포함된 시간", DESIGN_BASE_MIN, "분", 10)}${f("set-stepMin", "초과 시 단위", DESIGN_STEP_MIN, "분", 5)}
       ${f("set-stepFee", "단위마다 추가 금액", DESIGN_STEP_FEE, "원", 100)}</div>
+    <div class="card sec"><h2>⏱ 의뢰 예상 시간 기준</h2><p class="note" style="margin-top:0">손님이 고른 난이도·기능으로 '예상 추가 비용'을 계산할 때 써요. 실제 청구는 사장님이 작업 후 정해요.</p>
+      ${EST_ITEMS.map(([k, label]) => f("set-est-" + k, label, EST[k], "분", 5)).join("")}</div>
     <div class="card sec"><h2>🎓 학생 할인</h2>${f("set-stu", "할인율", Math.round(STUDENT_RATE * 100), "%", 1)}</div>
     <div class="card sec"><h2>👀 미리보기</h2><div id="setPreview" class="note" style="margin:0;font-size:14px"></div></div>`;
   setPreview();
@@ -3649,7 +3659,8 @@ function readSettings(){
   return {
     filament: Object.fromEntries(Object.keys(FILAMENT_PRICE).map(k => [k, v("set-fil-" + k)])),
     print: {perMin: v("set-perMin"), base: v("set-base"), margin: v("set-margin")},
-    design: {sketch: v("set-sketch"), idea: v("set-idea"), baseMin: v("set-baseMin"), stepMin: Math.max(1, v("set-stepMin")), stepFee: v("set-stepFee")},
+    design: {sketch: v("set-sketch"), idea: v("set-idea"), modify: v("set-modify"), pro: v("set-pro"), baseMin: v("set-baseMin"), stepMin: Math.max(1, v("set-stepMin")), stepFee: v("set-stepFee")},
+    est: Object.fromEntries(EST_ITEMS.map(([k]) => [k, v("set-est-" + k)])),
     studentRate: Math.min(90, Math.max(0, v("set-stu"))) / 100
   };
 }
@@ -3660,14 +3671,17 @@ function setPreview(){
   const w = n => Math.round(n).toLocaleString("ko-KR") + "원", r = s.studentRate;
   $("setPreview").innerHTML = `· 20mm 정육면체 (PLA 4.1g · 15분) 출력비 <b>${w(pr("PLA", 4.1, 15))}</b> (학생 ${w(pr("PLA", 4.1, 15) * (1 - r))})<br>
     · 큰 출력물 (PLA 100g · 5시간) 출력비 <b>${w(pr("PLA", 100, 300))}</b><br>
-    · 스케치 디자인 1시간 30분 → <b>${w(ds(s.design.sketch, 90))}</b> · 아이디어 2시간 → <b>${w(ds(s.design.idea, 120))}</b>`;
+    · 손그림 의뢰: 먼저 결제 <b>${w(s.design.sketch)}</b> (학생 ${w(s.design.sketch * (1 - r))}) · 실제 1시간 30분 걸리면 총 <b>${w(ds(s.design.sketch, 90))}</b><br>
+    · 아이디어 의뢰: 먼저 결제 <b>${w(s.design.idea)}</b> · '보통' 난이도면 예상 총 <b>${w(ds(s.design.idea, s.est.normal))}</b><br>
+    · 모델 수정 <b>${w(s.design.modify)}</b> · 전문 모델링 <b>${w(s.design.pro)}</b>부터`;
 }
 $("setForm").addEventListener("input", setPreview);
 $("setReset").addEventListener("click", () => {
   if (!confirm("코드에 적힌 처음 가격으로 되돌릴까요? (저장을 눌러야 적용돼요)")) return;
   const keep = JSON.parse(JSON.stringify(PRICE_DEFAULTS));
   Object.assign(FILAMENT_PRICE, keep.filament); Object.assign(PRINT_PRICE, keep.print);
-  DESIGN_FEE.sketch = keep.design.sketch; DESIGN_FEE.idea = keep.design.idea; DESIGN_BASE_MIN = keep.design.baseMin;
+  DESIGN_FEE.sketch = keep.design.sketch; DESIGN_FEE.idea = keep.design.idea; DESIGN_FEE.modify = keep.design.modify; DESIGN_FEE.pro = keep.design.pro;
+  Object.assign(EST, keep.est); DESIGN_BASE_MIN = keep.design.baseMin;
   DESIGN_STEP_MIN = keep.design.stepMin; DESIGN_STEP_FEE = keep.design.stepFee; STUDENT_RATE = keep.studentRate;
   renderSettings();
 });
@@ -3678,7 +3692,7 @@ $("setSave").addEventListener("click", async () => {
     const {db, D} = await fb();
     await D.set(D.ref(db, "site/settings"), s);
     SITE.settings = s; applySettings(s); refreshPrices();
-    $("setMsg").textContent = "저장했어요. 손님 화면에 바로 적용돼요.";
+    $("setMsg").textContent = "저장했어요. 손님 화면(새 사이트 포함)에 바로 적용돼요. 이미 열려 있던 화면은 새로고침하면 바뀌어요.";
     toast("💰 가격 설정을 저장했어요");
   }catch(err){ console.error(err); $("setMsg").textContent = "저장 실패: " + (err.code || err.message); }
 });
