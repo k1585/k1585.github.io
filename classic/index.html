@@ -996,7 +996,7 @@ button,a,label,summary,.acc-head,.wz-card,[role="button"]{-webkit-user-select:no
       <input type="search" id="ordSearch" placeholder="번호·이름·연락처·파일명 검색">
       <select id="ordType" aria-label="종류"><option value="all">모든 종류</option><option value="file">📦 3D 파일</option><option value="sketch">✏️ 스케치</option><option value="idea">💡 아이디어</option><option value="modify">🔧 모델 수정</option><option value="pro">📐 전문 모델링</option></select>
     </div>
-    <div class="seg sm" id="ordFilter" style="margin-bottom:10px"><button data-v="all" class="on">전체</button><button data-v="open">승인·확인 중</button><button data-v="making">제작 중</button><button data-v="done">완료</button><button data-v="test">테스트</button></div>
+    <div class="seg sm" id="ordFilter" style="margin-bottom:10px"><button data-v="all" class="on">전체</button><button data-v="open">결제 대기·확인중</button><button data-v="making">제작중</button><button data-v="done">제작완료</button><button data-v="test">테스트</button></div>
     <p class="sub" id="adminSub">불러오는 중…</p>
     <div id="adminList"></div>
   </div>
@@ -1250,9 +1250,9 @@ const TDEF = {
  "lookup.notFound": "주문을 찾을 수 없어요. 번호·연락처·조회 코드를 다시 확인해 주세요. 조회 코드를 잃어버렸다면 오픈채팅으로 알려 주세요.",
  "lookup.needBoth": "주문번호 4자리, 연락처, 조회 코드 6자리를 모두 넣어 주세요.",
  "lookup.noServer": "지금은 조회할 수 없어요. 잠시 후 다시 시도해 주세요.",
- "lookup.st.new": "주문 승인", "lookup.st.checked": "요구사항 확인 중", "lookup.st.making": "제작 중", "lookup.st.done": "제작 완료",
- "lookup.desc.new": "주문이 승인됐어요. 곧 요구사항을 확인할게요.",
- "lookup.desc.checked": "요청하신 내용을 꼼꼼히 확인하고 있어요.",
+ "lookup.st.new": "스마트스토어 결제 대기중", "lookup.st.checked": "결제완료 · 요구사항 확인중", "lookup.st.making": "제작중", "lookup.st.done": "제작완료",
+ "lookup.desc.new": "스마트스토어에서 결제해 주세요. 옵션에 주문 코드를 적어 주시면 바로 확인해요.",
+ "lookup.desc.checked": "결제가 확인됐어요. 요청하신 내용을 꼼꼼히 확인하고 있어요.",
  "lookup.desc.making": "지금 열심히 만들고 있어요. 🖨",
  "lookup.desc.done": "제작이 완료됐어요! <b>네이버쇼핑에서 배송 현황을 확인해 주세요.</b> 📦",
  "lookup.updated": "마지막 변경",
@@ -2083,6 +2083,7 @@ function refreshPrices(){
 function nav(screen){ history.pushState({screen}, ""); route(screen); }
 window.addEventListener("popstate", e => route((e.state && e.state.screen) || "home"));
 function route(screen){
+  if (/\/classic\//.test(location.pathname) && !window.FD_ADMIN_BOOT){ location.replace("../"); return; }
   if (EDIT) try{ sessionStorage.setItem("fd_edit_screen", screen); }catch(e){}
   showView("quoteView");
   setBodyClass();
@@ -3096,6 +3097,7 @@ function initUI(){
   onLongPress(document.querySelector("#formArea .adminTrigger"), 3000, () => openPin());
   const wantAdmin = location.hash === "#admin";
   history.replaceState({screen: "home"}, "", wantAdmin ? location.pathname + location.search : undefined);
+  window.FD_ADMIN_BOOT = wantAdmin || !/\/classic\//.test(location.pathname);
   route("home");
   if (wantAdmin) openPin();
 }
@@ -3278,9 +3280,14 @@ function pinFail(msg){
 }
 
 
+// classic 주소는 관리자 전용: 비밀번호 창을 닫거나 로그아웃하면 새 사이트로 돌아감
+const IS_CLASSIC = /\/classic\//.test(location.pathname);
+const toNewSite = () => { if (IS_CLASSIC) location.href = "../"; };
+{ const orig = closePin; closePin = function(){ orig(); setTimeout(() => { if ($("adminView").hidden) toNewSite(); }); }; }
 /* ================= 관리자 화면 ================= */
 let ordersUnsub = null, ordersData = {};
 async function openAdmin(){
+  window.FD_ADMIN_BOOT = !/\/classic\//.test(location.pathname);   // 관리자 화면이 열린 뒤 뒤로가기 → 새 사이트
   showView("adminView"); setTab("orders");
   const {db, D} = await fb();
   if (ordersUnsub) ordersUnsub();
@@ -3299,7 +3306,7 @@ $("adminOut").addEventListener("click", async () => {
   if (ordersUnsub){ ordersUnsub(); ordersUnsub = null; }
   ordersData = {}; $("adminList").innerHTML = "";
   try{ const {auth, U} = await fb(); await U.signOut(auth); }catch(e){}
-  history.replaceState({screen: "home"}, ""); route("home");
+  if (IS_CLASSIC) return toNewSite(); history.replaceState({screen: "home"}, ""); route("home");
 });
 
 /* ---- 주문 목록 ---- */
@@ -3392,7 +3399,7 @@ $("adminList").addEventListener("click", e => {
   if (e.target.closest('[data-act="smsCopy"]')) copyText(ta.value, e.target);
 });
 $("adminList").addEventListener("input", e => { const box = e.target.closest(".sms"); if (box && e.target.classList.contains("sms-body")) box.querySelector(".sms-go").href = smsHref(phoneOf(ordersData[box.dataset.no]), e.target.value); });
-const STATUS = [["new","✅ 주문 승인"],["checked","🔍 요구사항 확인 중"],["making","🖨 제작 중"],["done","📦 제작 완료"]];
+const STATUS = [["new","💳 스마트스토어 결제 대기중"],["checked","✅ 결제완료 · 요구사항 확인중"],["making","🖨 제작중"],["done","📦 제작완료"]];
 const stLabel = s => (STATUS.find(x => x[0] === s) || STATUS[0])[1];
 const ordFilter = {q: "", type: "all", st: "all"};
 const wonNum = s => +(String(s || "").match(/[\d,]+(?=원)/g) || ["0"]).slice(-1)[0].replace(/,/g, "");
@@ -3401,7 +3408,7 @@ function renderSummary(all){
   const thisMonth = real.filter(o => { const d = new Date(o.createdAt || 0); return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth(); });
   const money = thisMonth.reduce((a, o) => a + (o.quote ? wonNum(o.quote.total) : o.type === "file" ? wonNum(o.total) : 0), 0);
   const tile = (n, l) => `<div class="tile"><small>${l}</small><b>${n}</b></div>`;
-  $("adminSum").innerHTML = tile(real.filter(o => ["new","checked"].includes(o.status || "new")).length + "건", "승인·확인 중")
+  $("adminSum").innerHTML = tile(real.filter(o => ["new","checked"].includes(o.status || "new")).length + "건", "결제 대기·확인중")
     + tile(real.filter(o => o.status === "making").length + "건", "제작 중")
     + tile(thisMonth.length + "건", `${now.getMonth() + 1}월 주문`)
     + tile(money.toLocaleString("ko-KR") + "원", `${now.getMonth() + 1}월 금액 (확정·파일 주문)`);
