@@ -795,6 +795,12 @@ body.has-mbar{padding-bottom:84px}
 .sms-go{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;padding:10px 16px;border-radius:10px}
 .lk-c{letter-spacing:.15em}
 .hlk input#hlkCode{width:110px}
+
+/* v18: 가격 계산 방법 */
+.price-guide{margin:0 0 12px;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 14px}
+.price-guide summary{cursor:pointer;padding:13px 0;font-weight:700}
+.pg{padding-bottom:12px;font-size:14px;line-height:1.65}.pg h3{font-size:15px;margin:12px 0 6px}.pg ul{margin:0;padding-left:18px}.pg li{margin:3px 0}
+.pg-f{font-weight:700;padding:8px 12px;border-radius:10px;background:var(--accent-soft);margin:4px 0 8px}
 </style>
 </head>
 <body>
@@ -3345,12 +3351,16 @@ function costHtml(mat, g, m, paid, design){
     <p class="note">출력 원가는 가격 설정의 필라멘트 가격·분당 기계비·기본비로 계산해요. 마진 배율 ${PRINT_PRICE.margin}배를 곱한 값이 출력비예요.${design ? " 디자인비는 사장님 작업 시간 값이라 원가에 넣지 않았어요." : ""}</p></details>`;
 }
 // 손님에게 문자: 사장님 폰의 문자 앱을 내용이 채워진 채로 엶 (무료 · 사장님 번호로 발송)
+// 주문 코드 = 주문번호 4자리 + 영문 (새 사이트: 4821-KTP). 예전 주문은 번호만
+const codeOf = o => o.lkCode && o.lkCode.length <= 4 ? `${o.no}-${o.lkCode}` : o.no;
 const SMS_TPL = [
-  ["got", "접수 확인", o => `[FORMDOT] 주문번호 ${o.no} 접수됐어요.${o.lkCode ? ` 조회 코드 ${o.lkCode}` : ""}\n진행 상황: ${SITE_URL} → 주문 조회`],
-  ["pay", "결제 안내", o => `[FORMDOT] ${o.no} 금액은 ${o.quote ? o.quote.total : o.total}이에요. 스마트스토어에서 결제할 때 옵션에 주문번호 ${o.no}를 적어 주세요.`],
-  ["making", "제작 시작", o => `[FORMDOT] ${o.no} 제작을 시작했어요. 완성되면 다시 알려 드릴게요.`],
-  ["done", "제작 완료", o => `[FORMDOT] ${o.no} 제작이 끝나 발송했어요. 네이버쇼핑에서 배송 현황을 확인해 주세요. 감사합니다!`],
-  ["code", "조회 코드 다시", o => `[FORMDOT] ${o.no} 조회 코드는 ${o.lkCode || "(없음)"}예요. ${SITE_URL} → 주문 조회`]
+  ["got", "접수 확인", o => `[FORMDOT] 주문 코드 ${codeOf(o)} 접수됐어요.\n진행 상황: ${SITE_URL} → 주문 조회 (코드 + 휴대폰 번호)`],
+  ["pay", "결제 안내", o => `[FORMDOT] ${codeOf(o)} 금액은 ${o.quote ? o.quote.total : o.total}이에요. 스마트스토어에서 결제할 때 옵션에 주문 코드 ${codeOf(o)}를 적어 주세요.`],
+  ["extra", "추가 비용 (의뢰)", o => `[FORMDOT] ${codeOf(o)} 디자인 작업이 길어져 추가 비용 ${o.quote ? o.quote.total : "○○원"}이 생겼어요. 스마트스토어에서 결제할 때 옵션에 ${codeOf(o)}-추가 라고 적어 주세요.`],
+  ["file", "파일 전달 (의뢰)", o => `[FORMDOT] ${codeOf(o)} 완성된 3D 파일을 보내 드렸어요. 출력이 필요하면 ${SITE_URL} 에서 '3D 파일이 있어요' 또는 '10초 주문'으로 이 파일을 올려 주문해 주세요.`],
+  ["making", "제작 시작", o => `[FORMDOT] ${codeOf(o)} 제작을 시작했어요. 완성되면 다시 알려 드릴게요.`],
+  ["done", "제작 완료", o => `[FORMDOT] ${codeOf(o)} 제작이 끝나 발송했어요. 네이버쇼핑에서 배송 현황을 확인해 주세요. 감사합니다!`],
+  ["code", "주문 코드 다시", o => `[FORMDOT] 주문 코드는 ${codeOf(o)}예요. ${SITE_URL} → 주문 조회 (코드 + 휴대폰 번호)`]
 ];
 const phoneOf = o => String(o.contact || (valsOf(o.sections).flatMap(s => valsOf(s.rows)).find(r => r.k === "연락처") || {}).v || "").replace(/[^\d+]/g, "");
 const smsHref = (ph, body) => `sms:${ph}${/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent) ? "&" : "?"}body=${encodeURIComponent(body)}`;
@@ -3403,6 +3413,8 @@ function renderOrders(){
     return true;
   });
   $("adminSub").textContent = `전체 ${all.length}건 중 ${list.length}건 보기`;
+  if (!$("pgTop")){ $("adminSub").insertAdjacentHTML("beforebegin", `<div id="pgTop"></div>`); }
+  if (!$("pgTop").firstChild) $("pgTop").innerHTML = priceGuideHtml();
   if (!list.length){ $("adminList").innerHTML = `<div class="card" style="text-align:center;color:var(--muted)">${all.length ? "조건에 맞는 주문이 없어요." : "아직 들어온 주문이 없어요."}</div>`; return; }
   $("adminList").innerHTML = list.map(o => {
     const status = o.status || "new", done = status === "done", no = escapeHtml(o.no), type = o.type || "file";
@@ -3433,7 +3445,7 @@ function renderOrders(){
       ${o.printMin ? `<div class="oc-contact">⏱ 예상 출력 시간 <b>${fmtMin(o.printMin)}</b> · 예상 무게 <b>${o.weightG}g</b> <span class="note">(관리자만 보여요)</span></div>` : ""}
       ${type === "file" && (o.weightG || o.printMin) ? costHtml(matKeyOf(o), o.weightG || 0, o.printMin || 0, wonNum(o.total)) : ""}
       ${type !== "file" && o.quote && (o.quote.g || o.quote.m) ? costHtml(o.quote.mat || "PLA", o.quote.g || 0, o.quote.m || 0, wonNum(o.quote.total), o.quote.design) : ""}
-      ${o.lkCode ? `<div class="oc-contact">🔑 조회 코드 <b class="lk-c">${escapeHtml(o.lkCode)}</b></div>` : ""}
+      ${o.lkCode ? `<div class="oc-contact">🔑 주문 코드 <b class="lk-c">${escapeHtml(codeOf(o))}</b> <span class="note">손님이 스마트스토어 옵션에 적는 코드</span></div>` : ""}
       ${smsHtml(o)}
       ${o.quote ? `<div class="quote-line">✅ 확정 견적 ${escapeHtml(o.quote.total)} <span class="note">${escapeHtml(o.quote.text)}</span></div>` : ""}
       ${atts.length ? `<div class="oc-files">${atts.map((a, i) =>
@@ -3596,10 +3608,28 @@ $("pfAdd").addEventListener("click", async () => {
 });
 
 /* ---- 가격 설정 (코드 수정 없이) ---- */
+function priceGuideHtml(){
+  const P = PRINT_PRICE, pla = FILAMENT_PRICE.PLA || 18000, ex = (pla / 1000 * 4.7 + P.perMin * 17 + P.base) * P.margin;
+  return `<details class="price-guide"><summary>💡 가격 계산 방법</summary><div class="pg">
+    <h3>📦 3D 파일 출력 (자동)</h3>
+    <p class="pg-f">출력비 = (재료비 + 기계 사용료 + 기본비) × ${P.margin}</p>
+    <ul><li><b>재료비</b> = 필라멘트 1kg 가격 ÷ 1000 × 예상 무게(g) — PLA ${won(pla)}/kg이면 1g ${(pla / 1000).toFixed(1)}원</li>
+      <li><b>기계 사용료</b> = 예상 출력 시간(분) × ${P.perMin}원</li><li><b>기본비</b> = ${won(P.base)} (준비·포장)</li>
+      <li><b>× ${P.margin}</b> = 마진. 이걸 곱하기 전 금액이 '출력 원가'예요</li>
+      <li>무게·시간은 파일 모양(부피·벽·윗면·아랫면·돌출부)과 재료·튼튼함·품질·서포트 설정으로 계산해요. 뱀부 스튜디오로 슬라이싱한 파일이면 파일 속 무게·시간을 그대로 써요</li></ul>
+    <p class="note">예) 30×30×25mm PLA, 4.7g·17분 → (85 + 162 + ${P.base.toLocaleString("ko-KR")}) × ${P.margin} = <b>${won(ex)}</b></p>
+    <h3>✏️ 의뢰 출력 (손그림·아이디어·모델 수정·전문 모델링)</h3>
+    <ul><li>손님은 먼저 <b>디자인 기본비</b>만 결제해요: 손그림 ${won(DESIGN_FEE.sketch)} · 아이디어 ${won(DESIGN_FEE.idea)} · 모델 수정 ${won(DESIGN_FEE.modify || 3000)} · 전문 모델링 ${won(DESIGN_FEE.pro || 9000)}</li>
+      <li>기본 ${DESIGN_BASE_MIN}분 포함, 넘으면 <b>${DESIGN_STEP_MIN}분마다 ${won(DESIGN_STEP_FEE)}</b> 추가 → 디자인 후 '견적 계산기'에 실제 작업 시간을 넣고 추가 비용을 문자로 안내</li>
+      <li>완성 파일을 보내면 손님이 그 파일로 '3D 파일이 있어요'에서 출력을 주문 → 출력비는 위 자동 계산</li>
+      <li>사이트에 보이는 '예상 추가 비용'은 손님이 고른 난이도·기능으로 어림한 값이에요 (단순 1시간 · 보통 2시간 · 복잡 3시간 30분, 기능마다 15~45분)</li></ul>
+    <h3>🎓 학생 할인</h3><p>모든 금액에서 ${Math.round(STUDENT_RATE * 100)}% 할인. 학생증이 보이는 5초 이상 영상으로 확인해요.</p>
+    <p class="note">숫자는 아래 '가격 설정'에서 바꿀 수 있어요. 바꾸면 손님 화면과 원가 표시에 바로 반영돼요.</p></div></details>`;
+}
 function renderSettings(){
   const f = (id, label, val, unit, step = 1) => `<label class="set-row"><span>${label}</span>
     <span class="set-in"><input type="number" id="${id}" value="${val}" step="${step}" min="0">${unit ? `<em>${unit}</em>` : ""}</span></label>`;
-  $("setForm").innerHTML = `
+  $("setForm").innerHTML = priceGuideHtml().replace("<details", "<details open") + `
     <div class="card sec"><h2>🧵 필라멘트 1kg 가격</h2><p class="note" style="margin-top:0">1g 재료비 = 이 가격 ÷ 1000</p>
       ${Object.keys(FILAMENT_PRICE).map(k => f("set-fil-" + k, optLabel("mat", k), FILAMENT_PRICE[k], "원", 100)).join("")}</div>
     <div class="card sec"><h2>🖨 출력비</h2>
